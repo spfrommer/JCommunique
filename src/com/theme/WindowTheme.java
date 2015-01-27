@@ -1,4 +1,4 @@
-package com.notification;
+package com.theme;
 
 import java.awt.Color;
 import java.awt.Image;

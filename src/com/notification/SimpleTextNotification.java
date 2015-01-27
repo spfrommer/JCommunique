@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
 
+import com.theme.TextTheme;
+
 /**
  * A text notification which will display a title and a subtitle.
  */

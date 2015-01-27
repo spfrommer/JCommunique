@@ -6,6 +6,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
+import com.theme.WindowTheme;
+
 /**
  * A Notification which displays in a JWindow, handles click events, and allows subclasses to supply a JPanel. The
  * default Notification dimensions are set; if subclasses want to override this, they can do so in their constructors.

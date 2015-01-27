@@ -1,4 +1,4 @@
-package com.notification;
+package com.theme;
 
 public class ThemePackage {
 	public WindowTheme windowTheme;
