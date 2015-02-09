@@ -122,6 +122,35 @@ public abstract class WindowNotification extends Notification {
 		m_window.setSize(width, height);
 	}
 
+	/**
+	 * Gets the opacity of the window.
+	 * 
+	 * @return
+	 */
+	@Override
+	public float getOpacity() {
+		return m_window.getOpacity();
+	}
+
+	/**
+	 * Sets the opacity, overriding the value given in the window theme.
+	 * 
+	 * @param opacity
+	 *            the opacity between 0.5f and 1f. The bottom limit is to ensure that it looks good on all platforms.
+	 */
+	@Override
+	public void setOpacity(float opacity) {
+		if (opacity < 0.5f) {
+			opacity = 0.5f;
+		}
+
+		if (opacity > 1f) {
+			opacity = 1f;
+		}
+
+		m_window.setOpacity(opacity);
+	}
+
 	@Override
 	public void show() {
 		m_window.setVisible(true);

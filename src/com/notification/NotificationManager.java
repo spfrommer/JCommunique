@@ -20,10 +20,13 @@ public abstract class NotificationManager {
 	 * Adds a Notification and will also make it visible.
 	 * 
 	 * @param note
+	 * @param time
+	 *            the amount of time the Notification should display (e.g., Time.seconds(1) will make the Notification
+	 *            display for one second).
 	 */
-	public final void addNotification(Notification note) {
+	public final void addNotification(Notification note, Time time) {
 		m_notifications.add(note);
-		notificationAdded(note);
+		notificationAdded(note, time);
 	}
 
 	/**
@@ -40,7 +43,7 @@ public abstract class NotificationManager {
 		return m_notifications;
 	}
 
-	protected abstract void notificationAdded(Notification note);
+	protected abstract void notificationAdded(Notification note, Time time);
 
 	protected abstract void notificationRemoved(Notification note);
 

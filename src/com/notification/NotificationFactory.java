@@ -1,5 +1,7 @@
 package com.notification;
 
+import javax.swing.ImageIcon;
+
 import com.theme.ThemePackage;
 import com.theme.ThemePackagePresets;
 
@@ -32,7 +34,7 @@ public class NotificationFactory {
 	}
 
 	/**
-	 * Builds a SimpleTextNotification that must be shown with show().
+	 * Builds a SimpleTextNotification.
 	 * 
 	 * @param title
 	 * @param subtitle
@@ -46,5 +48,23 @@ public class NotificationFactory {
 		text.setSubtitle(subtitle);
 
 		return text;
+	}
+
+	/**
+	 * Builds an IconNotification.
+	 * 
+	 * @param title
+	 * @param subtitle
+	 * @param icon
+	 * @return
+	 */
+	public IconNotification buildIconNotification(String title, String subtitle, ImageIcon icon) {
+		IconNotification iconNote = new IconNotification(icon);
+		iconNote.setWindowTheme(m_pack.windowTheme);
+		iconNote.setTextTheme(m_pack.textTheme);
+		iconNote.setTitle(title);
+		iconNote.setSubtitle(subtitle);
+
+		return iconNote;
 	}
 }

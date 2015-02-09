@@ -46,6 +46,10 @@ public abstract class Notification {
 
 	public abstract void setSize(int width, int height);
 
+	public abstract float getOpacity();
+
+	public abstract void setOpacity(float opacity);
+
 	/**
 	 * Reveals the Notification on the desktop.
 	 */
