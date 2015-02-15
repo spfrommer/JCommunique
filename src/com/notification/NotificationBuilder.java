@@ -12,5 +12,5 @@ public interface NotificationBuilder {
 	 * @param pack
 	 * @return
 	 */
-	public Notification buildNotification(ThemePackage pack);
+	public Notification buildNotification(ThemePackage pack, Object[] args);
 }

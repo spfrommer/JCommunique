@@ -68,7 +68,25 @@ public class NotificationFactory {
 	public Notification build(String name) {
 		if (!m_builders.containsKey(name))
 			throw new RuntimeException("No NotificationBuilder for: " + name);
-		Notification note = m_builders.get(name).buildNotification(m_pack);
+		Notification note = m_builders.get(name).buildNotification(m_pack,
+				new Object[0]);
+		return note;
+	}
+
+	/**
+	 * Builds a Notification using the NotificationBuilder associated with the
+	 * name.
+	 * 
+	 * @param name
+	 * @param args
+	 *            the args passed to the NotificationBuilder
+	 * @return
+	 */
+	public Notification build(String name, Object... args) {
+		if (!m_builders.containsKey(name))
+			throw new RuntimeException("No NotificationBuilder for: " + name);
+		Notification note = m_builders.get(name)
+				.buildNotification(m_pack, args);
 		return note;
 	}
 
