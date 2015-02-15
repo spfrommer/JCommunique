@@ -9,8 +9,9 @@ import javax.swing.JWindow;
 import com.theme.WindowTheme;
 
 /**
- * A Notification which displays in a JWindow, handles click events, and allows subclasses to supply a JPanel. The
- * default Notification dimensions are set; if subclasses want to override this, they can do so in their constructors.
+ * A Notification which displays in a JWindow, handles click events, and allows
+ * subclasses to supply a JPanel. The default Notification dimensions are set;
+ * if subclasses want to override this, they can do so in their constructors.
  */
 public abstract class WindowNotification extends Notification {
 	private JWindow m_window;
@@ -72,8 +73,8 @@ public abstract class WindowNotification extends Notification {
 	}
 
 	/**
-	 * Sets the theme of the WindowNotification. It is up to the subclasses how they want to interpret the "image"
-	 * attribute of the theme.
+	 * Sets the theme of the WindowNotification. It is up to the subclasses how
+	 * they want to interpret the "image" attribute of the theme.
 	 * 
 	 * @param theme
 	 */
@@ -136,12 +137,26 @@ public abstract class WindowNotification extends Notification {
 	 * Sets the opacity, overriding the value given in the window theme.
 	 * 
 	 * @param opacity
-	 *            the opacity between 0.5f and 1f. The bottom limit is to ensure that it looks good on all platforms.
+	 *            the opacity between MINIMUM_OPACITY and 1f. The bottom limit
+	 *            is to ensure that it looks good on all platforms.
 	 */
 	@Override
 	public void setOpacity(float opacity) {
-		if (opacity < 0.5f) {
-			opacity = 0.5f;
+		if (opacity < Notification.MINIMUM_OPACITY) {
+			opacity = Notification.MINIMUM_OPACITY;
+		}
+
+		if (opacity > 1f) {
+			opacity = 1f;
+		}
+
+		m_window.setOpacity(opacity);
+	}
+
+	@Override
+	protected void directSetOpacity(float opacity) {
+		if (opacity < 0) {
+			opacity = 0;
 		}
 
 		if (opacity > 1f) {
