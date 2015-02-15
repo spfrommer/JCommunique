@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 
+import com.notification.types.IconNotification;
+import com.notification.types.SimpleTextNotification;
 import com.theme.ThemePackage;
 import com.theme.ThemePackagePresets;
 

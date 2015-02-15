@@ -1,4 +1,4 @@
-package com.notification;
+package com.notification.types;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

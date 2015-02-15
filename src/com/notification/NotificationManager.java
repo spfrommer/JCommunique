@@ -3,11 +3,10 @@ package com.notification;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.notification.NotificationFactory.PopupLocation;
-
 /**
- * Manages the creation and movement of Notifications. Once a notification is added, all aspects of it except for click
- * handeling are managed by the NotificationManager. This includes things such as showing and hiding.
+ * Manages the creation and movement of Notifications. Once a notification is
+ * added, all aspects of it except for click handeling are managed by the
+ * NotificationManager. This includes things such as showing and hiding.
  */
 public abstract class NotificationManager {
 	private List<Notification> m_notifications;
@@ -21,8 +20,9 @@ public abstract class NotificationManager {
 	 * 
 	 * @param note
 	 * @param time
-	 *            the amount of time the Notification should display (e.g., Time.seconds(1) will make the Notification
-	 *            display for one second).
+	 *            the amount of time the Notification should display (e.g.,
+	 *            Time.seconds(1) will make the Notification display for one
+	 *            second).
 	 */
 	public final void addNotification(Notification note, Time time) {
 		m_notifications.add(note);
@@ -46,6 +46,4 @@ public abstract class NotificationManager {
 	protected abstract void notificationAdded(Notification note, Time time);
 
 	protected abstract void notificationRemoved(Notification note);
-
-	protected abstract void setLocation(PopupLocation loc);
 }

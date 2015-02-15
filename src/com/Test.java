@@ -1,10 +1,10 @@
 package com;
 
 import com.notification.SimpleManager;
-import com.notification.IconNotification;
 import com.notification.IconUtils;
 import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.PopupLocation;
+import com.notification.types.IconNotification;
 import com.notification.NotificationManager;
 import com.notification.Time;
 import com.theme.ThemePackagePresets;

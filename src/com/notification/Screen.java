@@ -6,6 +6,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
 import com.notification.NotificationFactory.PopupLocation;
+import com.notification.types.WindowNotification;
 
 public class Screen {
 	private int m_width;

@@ -1,4 +1,4 @@
-package com.notification;
+package com.notification.types;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
+import com.notification.Notification;
 import com.theme.WindowTheme;
 
 /**
