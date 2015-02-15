@@ -88,22 +88,34 @@ public class QueueManager extends SimpleManager {
 	}
 
 	private class MovementManager implements ActionListener {
+		private int getPreviousShownIndex(List<Notification> notes,
+				int startIndex) {
+			for (int i = startIndex; i < notes.size(); i++) {
+				if (notes.get(i).isShown())
+					return i;
+			}
+			return -1;
+		}
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			List<Notification> notes = getNotifications();
+
 			PopupLocation loc = getLocation();
 			int x = getScreen().getX(loc);
 			int y = getScreen().getY(loc);
 
-			for (int i = 0; i < notes.size(); i++) {
+			for (int i = notes.size() - 1; i >= 0; i--) {
 				Notification note = notes.get(i);
-				if (i == 0) {
+				int prevIndex = getPreviousShownIndex(notes, i + 1);
+
+				if (prevIndex == -1) {
 					note.setLocation(x, y);
 					continue;
 				}
 
 				// not really sure why this code works, but it does
-				Notification prev = notes.get(i - 1);
+				Notification prev = notes.get(prevIndex);
 				int dif = note.getY() - prev.getY();
 				int desdif;
 				if (m_scroll == ScrollDirection.SOUTH) {
@@ -117,7 +129,7 @@ public class QueueManager extends SimpleManager {
 				if (delta == 0) {
 					continue;
 				}
-				if (delta < 3) {
+				if (Math.abs(delta) < 3) {
 					setNum = delta > 0 ? 1 : -1;
 				}
 				// System.out.println("Setting loc");
