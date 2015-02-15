@@ -93,6 +93,10 @@ public class SimpleManager extends NotificationManager {
 		m_loc = loc;
 	}
 
+	protected Screen getScreen() {
+		return m_screen;
+	}
+
 	@Override
 	protected void notificationAdded(Notification note, Time time) {
 		note.setLocation(m_screen.getX(m_loc), m_screen.getY(m_loc));
@@ -109,14 +113,13 @@ public class SimpleManager extends NotificationManager {
 
 			note.setOpacity(Notification.MINIMUM_OPACITY);
 			note.show();
-
-			if (!time.isInfinite()) {
-				java.util.Timer removeTimer = new java.util.Timer();
-				removeTimer.schedule(new RemoveTask(note),
-						time.getMilliseconds());
-			}
 		} else {
 			note.show();
+		}
+
+		if (!time.isInfinite()) {
+			java.util.Timer removeTimer = new java.util.Timer();
+			removeTimer.schedule(new RemoveTask(note), time.getMilliseconds());
 		}
 	}
 
@@ -130,6 +133,8 @@ public class SimpleManager extends NotificationManager {
 
 			Timer timer = new Timer((int) frequency, new Fader(note, -fade, 0));
 			timer.start();
+
+			System.out.println("Removing fader");
 		} else {
 			note.hide();
 		}
@@ -150,8 +155,10 @@ public class SimpleManager extends NotificationManager {
 		public void actionPerformed(ActionEvent e) {
 			if ((m_fade > 0) ? m_note.getOpacity() < m_stopFade : m_note
 					.getOpacity() > m_stopFade) {
+				System.out.println("Fading " + m_note.getOpacity());
 				m_note.directSetOpacity(m_note.getOpacity() + m_fade);
 			} else {
+				System.out.println("Stopping fade");
 				((Timer) e.getSource()).stop();
 				if (m_fade < 0) {
 					m_note.hide();

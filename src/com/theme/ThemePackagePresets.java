@@ -30,7 +30,8 @@ public class ThemePackagePresets {
 
 		WindowTheme window = new WindowTheme();
 		window.background = new Color(0, 0, 50);
-		// JLABEL DOES NOT LIKE FOREGROUND COLOR BEING PURE WHITE, FOR SOME REASON. IT SETS IT TO BLACK. THIS WORKS,
+		// JLABEL DOES NOT LIKE FOREGROUND COLOR BEING PURE WHITE, FOR SOME
+		// REASON. IT SETS IT TO BLACK. THIS WORKS,
 		// HOWEVER.
 		window.foreground = new Color(254, 254, 254);
 		window.opacity = 0.8f;
