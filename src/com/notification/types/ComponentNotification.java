@@ -39,7 +39,20 @@ public class ComponentNotification extends WindowNotification {
 			comp.setBackground(theme.background);
 			comp.setForeground(theme.foreground);
 		}
+		getWindow().revalidate();
+		getWindow().repaint();
 	}
+	
+	/**
+	 * Removes a component
+	 * @param comp
+	 */
+	public void removeComponent(Component comp) {
+		m_panel.remove(comp);
+
+		getWindow().revalidate();
+		getWindow().repaint();
+}
 
 	@Override
 	protected void themeSet(WindowTheme theme) {

@@ -41,6 +41,8 @@ public abstract class WindowNotification extends Notification {
 
 		setSize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	}
+	
+	protected JWindow getWindow() { return m_window; }
 
 	protected void setPanel(JPanel panel) {
 		if (m_panel != null) {
