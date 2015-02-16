@@ -8,7 +8,6 @@ import javax.swing.Timer;
 
 import com.notification.Notification;
 import com.notification.NotificationFactory.Location;
-import com.utils.Time;
 
 /**
  * A NotificationManager which slides old Notifications above or below new Notifications.
@@ -36,15 +35,6 @@ public class QueueManager extends SimpleManager {
 
 	public QueueManager(Location loc) {
 		super(loc);
-	}
-
-	/**
-	 * @param loc
-	 * @param fadeTime
-	 *            how long the fade should take. Infinite means no fade.
-	 */
-	public QueueManager(Location loc, Time fadeTime) {
-		super(loc, fadeTime);
 	}
 
 	/**

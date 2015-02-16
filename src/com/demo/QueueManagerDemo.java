@@ -1,19 +1,22 @@
 package com.demo;
 
-import com.manager.NotificationManager;
 import com.manager.QueueManager;
 import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.Location;
 import com.notification.types.IconNotification;
+import com.platform.Platform;
 import com.theme.ThemePackagePresets;
 import com.utils.IconUtils;
 import com.utils.Time;
 
 public class QueueManagerDemo {
 	public static void main(String[] args) throws Exception {
+		Platform.instance().setAdjustForPlatform(true);
+
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanLight());
-		// make the manager have a 1-second fade
-		NotificationManager manager = new QueueManager(Location.NORTHWEST, Time.seconds(1));
+		QueueManager manager = new QueueManager(Location.NORTHWEST);
+
+		Thread.sleep(2000);
 
 		for (int i = 0; i < 5; i++) {
 			IconNotification note = factory.buildIconNotification("Test", "Subtest",

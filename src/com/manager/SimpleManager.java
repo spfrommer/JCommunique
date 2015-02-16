@@ -8,6 +8,7 @@ import javax.swing.Timer;
 
 import com.notification.Notification;
 import com.notification.NotificationFactory.Location;
+import com.platform.Platform;
 import com.utils.Screen;
 import com.utils.Time;
 
@@ -34,18 +35,6 @@ public class SimpleManager extends NotificationManager {
 		m_screen = new Screen(true);
 		m_fadeEnabled = false;
 		m_fadeTime = Time.seconds(1);
-	}
-
-	/**
-	 * @param loc
-	 * @param fadeTime
-	 *            how long the fade should take. Infinite means no fade.
-	 */
-	public SimpleManager(Location loc, Time fadeTime) {
-		m_loc = loc;
-		m_screen = new Screen(true);
-		m_fadeEnabled = true;
-		m_fadeTime = fadeTime;
 	}
 
 	/**
@@ -110,6 +99,10 @@ public class SimpleManager extends NotificationManager {
 	protected void notificationAdded(Notification note, Time time) {
 		note.setLocation(m_screen.getX(m_loc), m_screen.getY(m_loc));
 
+		if (Platform.instance().isUsed()) {
+			m_fadeEnabled = Platform.instance().isSupported("fade");
+		}
+
 		if (m_fadeEnabled) {
 			double frequency = 100f;
 			double opacity = note.getOpacity();
@@ -131,8 +124,12 @@ public class SimpleManager extends NotificationManager {
 
 	@Override
 	protected void notificationRemoved(Notification note) {
+		if (Platform.instance().isUsed()) {
+			m_fadeEnabled = Platform.instance().isSupported("fade");
+		}
+
 		if (m_fadeEnabled) {
-			double frequency = 100f;
+			double frequency = 50f;
 
 			Timer timer = new Timer((int) frequency, new Fader(note, -getDeltaFade(note.getOpacity(), frequency), 0));
 			timer.start();
