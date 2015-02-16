@@ -14,6 +14,8 @@ public class ThemePackagePresets {
 		window.background = new Color(255, 255, 255);
 		window.foreground = new Color(10, 10, 10);
 		window.opacity = 0.8f;
+		window.width = 300;
+		window.height = 100;
 
 		TextTheme text = new TextTheme();
 		text.title = new Font("Arial", Font.BOLD, 25);
@@ -35,6 +37,8 @@ public class ThemePackagePresets {
 		// HOWEVER.
 		window.foreground = new Color(254, 254, 254);
 		window.opacity = 0.8f;
+		window.width = 300;
+		window.height = 100;
 
 		TextTheme text = new TextTheme();
 		text.title = new Font("Arial", Font.BOLD, 25);

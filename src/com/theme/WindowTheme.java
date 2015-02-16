@@ -7,5 +7,7 @@ public class WindowTheme {
 	public Color background;
 	public Color foreground;
 	public Image image;
-	public float opacity;
+	public double opacity;
+	public int width;
+	public int height;
 }

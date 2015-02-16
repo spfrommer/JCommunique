@@ -5,7 +5,6 @@ import java.util.List;
 
 public abstract class Notification {
 	private List<NotificationListener> m_listeners;
-	public static final float MINIMUM_OPACITY = 0.5f;
 
 	public Notification() {
 		m_listeners = new ArrayList<NotificationListener>();
@@ -47,11 +46,9 @@ public abstract class Notification {
 
 	public abstract void setSize(int width, int height);
 
-	public abstract float getOpacity();
+	public abstract double getOpacity();
 
-	public abstract void setOpacity(float opacity);
-
-	protected abstract void directSetOpacity(float opaacity);
+	public abstract void setOpacity(double opacity);
 
 	/**
 	 * Reveals the Notification on the desktop.

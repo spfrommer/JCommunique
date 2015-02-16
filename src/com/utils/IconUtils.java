@@ -1,4 +1,4 @@
-package com.notification;
+package com.utils;
 
 import java.awt.Image;
 
@@ -13,6 +13,7 @@ public class IconUtils {
 	 * Creates an ImageIcon of the specified path with a given width and height.
 	 * 
 	 * @param path
+	 *            the classpath, starting with the root (e.g., /com/demo/exclamation.png)
 	 * @param width
 	 * @param height
 	 * @return

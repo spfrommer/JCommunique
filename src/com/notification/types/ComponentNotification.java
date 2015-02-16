@@ -42,9 +42,10 @@ public class ComponentNotification extends WindowNotification {
 		getWindow().revalidate();
 		getWindow().repaint();
 	}
-	
+
 	/**
 	 * Removes a component
+	 * 
 	 * @param comp
 	 */
 	public void removeComponent(Component comp) {
@@ -52,7 +53,7 @@ public class ComponentNotification extends WindowNotification {
 
 		getWindow().revalidate();
 		getWindow().repaint();
-}
+	}
 
 	@Override
 	protected void themeSet(WindowTheme theme) {

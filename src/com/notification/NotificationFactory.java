@@ -16,7 +16,7 @@ public class NotificationFactory {
 	private ThemePackage m_pack;
 	private HashMap<String, NotificationBuilder> m_builders = new HashMap<String, NotificationBuilder>();
 
-	public enum PopupLocation {
+	public enum Location {
 		NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST
 	}
 
@@ -29,8 +29,8 @@ public class NotificationFactory {
 	}
 
 	/**
-	 * Sets the themes that the factory should use when creating notifications.
-	 * See ThemePackagePresets for some default themes.
+	 * Sets the themes that the factory should use when creating notifications. See ThemePackagePresets for some default
+	 * themes.
 	 * 
 	 * @param pack
 	 */
@@ -39,8 +39,7 @@ public class NotificationFactory {
 	}
 
 	/**
-	 * Adds a custom NotificationBuilder. Notifications can then be built using
-	 * build(String name).
+	 * Adds a custom NotificationBuilder. Notifications can then be built using build(String name).
 	 * 
 	 * @param name
 	 * @param builder
@@ -59,8 +58,7 @@ public class NotificationFactory {
 	}
 
 	/**
-	 * Builds a Notification using the NotificationBuilder associated with the
-	 * name.
+	 * Builds a Notification using the NotificationBuilder associated with the name.
 	 * 
 	 * @param name
 	 * @return
@@ -68,14 +66,12 @@ public class NotificationFactory {
 	public Notification build(String name) {
 		if (!m_builders.containsKey(name))
 			throw new RuntimeException("No NotificationBuilder for: " + name);
-		Notification note = m_builders.get(name).buildNotification(m_pack,
-				new Object[0]);
+		Notification note = m_builders.get(name).buildNotification(m_pack, new Object[0]);
 		return note;
 	}
 
 	/**
-	 * Builds a Notification using the NotificationBuilder associated with the
-	 * name.
+	 * Builds a Notification using the NotificationBuilder associated with the name.
 	 * 
 	 * @param name
 	 * @param args
@@ -85,8 +81,7 @@ public class NotificationFactory {
 	public Notification build(String name, Object... args) {
 		if (!m_builders.containsKey(name))
 			throw new RuntimeException("No NotificationBuilder for: " + name);
-		Notification note = m_builders.get(name)
-				.buildNotification(m_pack, args);
+		Notification note = m_builders.get(name).buildNotification(m_pack, args);
 		return note;
 	}
 
@@ -97,8 +92,7 @@ public class NotificationFactory {
 	 * @param subtitle
 	 * @return
 	 */
-	public SimpleTextNotification buildTextNotification(String title,
-			String subtitle) {
+	public SimpleTextNotification buildTextNotification(String title, String subtitle) {
 		SimpleTextNotification text = new SimpleTextNotification();
 		text.setWindowTheme(m_pack.windowTheme);
 		text.setTextTheme(m_pack.textTheme);
@@ -116,8 +110,7 @@ public class NotificationFactory {
 	 * @param icon
 	 * @return
 	 */
-	public IconNotification buildIconNotification(String title,
-			String subtitle, ImageIcon icon) {
+	public IconNotification buildIconNotification(String title, String subtitle, ImageIcon icon) {
 		IconNotification iconNote = new IconNotification(icon);
 		iconNote.setWindowTheme(m_pack.windowTheme);
 		iconNote.setTextTheme(m_pack.textTheme);

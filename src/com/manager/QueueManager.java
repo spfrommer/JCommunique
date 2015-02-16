@@ -1,4 +1,4 @@
-package com.notification;
+package com.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,11 +6,12 @@ import java.util.List;
 
 import javax.swing.Timer;
 
-import com.notification.NotificationFactory.PopupLocation;
+import com.notification.Notification;
+import com.notification.NotificationFactory.Location;
+import com.utils.Time;
 
 /**
- * A NotificationManager which slides old Notifications above or below new
- * Notifications.
+ * A NotificationManager which slides old Notifications above or below new Notifications.
  */
 public class QueueManager extends SimpleManager {
 	private Timer m_timer;
@@ -33,7 +34,7 @@ public class QueueManager extends SimpleManager {
 		super();
 	}
 
-	public QueueManager(PopupLocation loc) {
+	public QueueManager(Location loc) {
 		super(loc);
 	}
 
@@ -42,7 +43,7 @@ public class QueueManager extends SimpleManager {
 	 * @param fadeTime
 	 *            how long the fade should take. Infinite means no fade.
 	 */
-	public QueueManager(PopupLocation loc, Time fadeTime) {
+	public QueueManager(Location loc, Time fadeTime) {
 		super(loc, fadeTime);
 	}
 
@@ -70,8 +71,7 @@ public class QueueManager extends SimpleManager {
 	}
 
 	/**
-	 * Sets the direction in which old Notifications will scroll after new ones
-	 * have been added.
+	 * Sets the direction in which old Notifications will scroll after new ones have been added.
 	 * 
 	 * @param dir
 	 */
@@ -80,16 +80,15 @@ public class QueueManager extends SimpleManager {
 	}
 
 	/**
-	 * Stops controlling the Notifications and leaves them in their current
-	 * positions. They will still hide after the specified time, however.
+	 * Stops controlling the Notifications and leaves them in their current positions. They will still hide after the
+	 * specified time, however.
 	 */
 	public void stop() {
 		m_timer.stop();
 	}
 
 	private class MovementManager implements ActionListener {
-		private int getPreviousShownIndex(List<Notification> notes,
-				int startIndex) {
+		private int getPreviousShownIndex(List<Notification> notes, int startIndex) {
 			for (int i = startIndex; i < notes.size(); i++) {
 				if (notes.get(i).isShown())
 					return i;
@@ -101,7 +100,7 @@ public class QueueManager extends SimpleManager {
 		public void actionPerformed(ActionEvent e) {
 			List<Notification> notes = getNotifications();
 
-			PopupLocation loc = getLocation();
+			Location loc = getLocation();
 			int x = getScreen().getX(loc);
 			int y = getScreen().getY(loc);
 

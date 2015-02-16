@@ -1,4 +1,4 @@
-package com.notification;
+package com.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,27 +6,30 @@ import java.util.TimerTask;
 
 import javax.swing.Timer;
 
-import com.notification.NotificationFactory.PopupLocation;
+import com.notification.Notification;
+import com.notification.NotificationFactory.Location;
+import com.utils.Screen;
+import com.utils.Time;
 
 /**
- * Simply displays new Notifications in one corner of the screen on top of each
- * other. Has an option for fading.
+ * Simply displays new Notifications in one corner of the screen on top of each other. Has an option for fading (note -
+ * results will vary across different platforms).
  */
 public class SimpleManager extends NotificationManager {
-	private PopupLocation m_loc;
+	private Location m_loc;
 	private Screen m_screen;
 
 	private boolean m_fadeEnabled = false;
 	private Time m_fadeTime;
 
 	public SimpleManager() {
-		m_loc = PopupLocation.NORTHEAST;
+		m_loc = Location.NORTHEAST;
 		m_screen = new Screen(true);
 		m_fadeEnabled = false;
 		m_fadeTime = Time.seconds(1);
 	}
 
-	public SimpleManager(PopupLocation loc) {
+	public SimpleManager(Location loc) {
 		m_loc = loc;
 		m_screen = new Screen(true);
 		m_fadeEnabled = false;
@@ -38,7 +41,7 @@ public class SimpleManager extends NotificationManager {
 	 * @param fadeTime
 	 *            how long the fade should take. Infinite means no fade.
 	 */
-	public SimpleManager(PopupLocation loc, Time fadeTime) {
+	public SimpleManager(Location loc, Time fadeTime) {
 		m_loc = loc;
 		m_screen = new Screen(true);
 		m_fadeEnabled = true;
@@ -80,7 +83,7 @@ public class SimpleManager extends NotificationManager {
 	/**
 	 * @return the location where the Notifications show up
 	 */
-	public PopupLocation getLocation() {
+	public Location getLocation() {
 		return m_loc;
 	}
 
@@ -89,7 +92,7 @@ public class SimpleManager extends NotificationManager {
 	 * 
 	 * @param loc
 	 */
-	public void setLocation(PopupLocation loc) {
+	public void setLocation(Location loc) {
 		m_loc = loc;
 	}
 
@@ -97,21 +100,24 @@ public class SimpleManager extends NotificationManager {
 		return m_screen;
 	}
 
+	private double getDeltaFade(double opacity, double frequency) {
+		double numTimes = m_fadeTime.getMilliseconds() / frequency;
+		double fade = opacity / numTimes;
+		return fade;
+	}
+
 	@Override
 	protected void notificationAdded(Notification note, Time time) {
 		note.setLocation(m_screen.getX(m_loc), m_screen.getY(m_loc));
 
 		if (m_fadeEnabled) {
-			float frequency = 100f;
-			float numTimes = m_fadeTime.getMilliseconds() / frequency;
-			float opacity = note.getOpacity();
-			float fade = opacity / numTimes;
+			double frequency = 100f;
+			double opacity = note.getOpacity();
 
-			Timer timer = new Timer((int) frequency, new Fader(note, fade,
-					opacity));
+			note.setOpacity(0);
+			Timer timer = new Timer((int) frequency, new Fader(note, getDeltaFade(opacity, frequency), opacity));
 			timer.start();
 
-			note.setOpacity(Notification.MINIMUM_OPACITY);
 			note.show();
 		} else {
 			note.show();
@@ -126,15 +132,10 @@ public class SimpleManager extends NotificationManager {
 	@Override
 	protected void notificationRemoved(Notification note) {
 		if (m_fadeEnabled) {
-			float frequency = 100f;
-			float numTimes = m_fadeTime.getMilliseconds() / frequency;
-			float opacity = note.getOpacity();
-			float fade = opacity / numTimes;
+			double frequency = 100f;
 
-			Timer timer = new Timer((int) frequency, new Fader(note, -fade, 0));
+			Timer timer = new Timer((int) frequency, new Fader(note, -getDeltaFade(note.getOpacity(), frequency), 0));
 			timer.start();
-
-			System.out.println("Removing fader");
 		} else {
 			note.hide();
 		}
@@ -142,10 +143,10 @@ public class SimpleManager extends NotificationManager {
 
 	private class Fader implements ActionListener {
 		private Notification m_note;
-		private float m_fade;
-		private float m_stopFade;
+		private double m_fade;
+		private double m_stopFade;
 
-		public Fader(Notification note, float fade, float stopFade) {
+		public Fader(Notification note, double fade, double stopFade) {
 			m_note = note;
 			m_fade = fade;
 			m_stopFade = stopFade;
@@ -153,12 +154,9 @@ public class SimpleManager extends NotificationManager {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if ((m_fade > 0) ? m_note.getOpacity() < m_stopFade : m_note
-					.getOpacity() > m_stopFade) {
-				System.out.println("Fading " + m_note.getOpacity());
-				m_note.directSetOpacity(m_note.getOpacity() + m_fade);
+			if ((m_fade > 0) ? m_note.getOpacity() < m_stopFade : m_note.getOpacity() > m_stopFade) {
+				m_note.setOpacity(m_note.getOpacity() + m_fade);
 			} else {
-				System.out.println("Stopping fade");
 				((Timer) e.getSource()).stop();
 				if (m_fade < 0) {
 					m_note.hide();

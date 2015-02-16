@@ -1,12 +1,11 @@
-package com.notification;
+package com.utils;
 
 import java.awt.Dimension;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
-import com.notification.NotificationFactory.PopupLocation;
-import com.notification.types.WindowNotification;
+import com.notification.NotificationFactory.Location;
 
 public class Screen {
 	private int m_width;
@@ -43,15 +42,15 @@ public class Screen {
 
 	private void calculatePositions() {
 		m_leftX = PADDING;
-		m_centerX = (int) (m_width / 2f - WindowNotification.DEFAULT_WIDTH / 2f);
-		m_rightX = m_width - WindowNotification.DEFAULT_WIDTH - PADDING;
+		m_centerX = (int) (m_width / 2d);
+		m_rightX = m_width - PADDING;
 
 		m_topY = PADDING;
-		m_centerY = (int) (m_height / 2f - WindowNotification.DEFAULT_HEIGHT / 2f);
-		m_bottomY = m_height - WindowNotification.DEFAULT_HEIGHT - PADDING;
+		m_centerY = (int) (m_height / 2d);
+		m_bottomY = m_height - PADDING;
 	}
 
-	public int getX(PopupLocation loc) {
+	public int getX(Location loc) {
 		switch (loc) {
 		case SOUTHWEST:
 			return m_leftX;
@@ -74,7 +73,7 @@ public class Screen {
 		}
 	}
 
-	public int getY(PopupLocation loc) {
+	public int getY(Location loc) {
 		switch (loc) {
 		case SOUTHWEST:
 			return m_bottomY;
