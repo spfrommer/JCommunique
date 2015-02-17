@@ -13,7 +13,7 @@ import com.theme.WindowTheme;
 /**
  * An IconNotification displays text, but with an icon.
  */
-public class IconNotification extends ComponentNotification {
+public class IconNotification extends BorderLayoutNotification {
 	private TextTheme m_theme;
 
 	private String m_title;

@@ -1,5 +1,7 @@
 package com.notification.types;
 
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -96,7 +98,23 @@ public abstract class WindowNotification extends Notification {
 		themeSet(theme);
 	}
 
-	protected abstract void themeSet(WindowTheme theme);
+	private void recursiveSetTheme(WindowTheme theme, Component comp) {
+		comp.setBackground(theme.background);
+		comp.setForeground(theme.foreground);
+
+		if (comp instanceof Container) {
+			Container container = (Container) comp;
+			for (Component component : container.getComponents()) {
+				recursiveSetTheme(theme, component);
+			}
+		}
+	}
+
+	protected void themeSet(WindowTheme theme) {
+		for (Component comp : m_panel.getComponents()) {
+			recursiveSetTheme(theme, comp);
+		}
+	}
 
 	@Override
 	public int getX() {

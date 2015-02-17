@@ -11,12 +11,12 @@ import com.theme.WindowTheme;
 /**
  * Lays out Swing Components in a BorderLayout.
  */
-public class ComponentNotification extends WindowNotification {
+public class BorderLayoutNotification extends WindowNotification {
 	private JPanel m_panel;
 
 	public static final int PANEL_PADDING = 10;
 
-	public ComponentNotification() {
+	public BorderLayoutNotification() {
 		super();
 
 		m_panel = new JPanel(new BorderLayout());
@@ -53,13 +53,5 @@ public class ComponentNotification extends WindowNotification {
 
 		getWindow().revalidate();
 		getWindow().repaint();
-	}
-
-	@Override
-	protected void themeSet(WindowTheme theme) {
-		for (Component comp : m_panel.getComponents()) {
-			comp.setBackground(theme.background);
-			comp.setForeground(theme.foreground);
-		}
 	}
 }

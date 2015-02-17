@@ -9,11 +9,8 @@ import com.theme.TextTheme;
 /**
  * A text notification which will display a title and a subtitle.
  */
-public class TextNotification extends ComponentNotification {
+public class TextNotification extends BorderLayoutNotification {
 	private TextTheme m_theme;
-
-	private String m_title;
-	private String m_subtitle;
 
 	private JLabel m_titleLabel;
 	private JLabel m_subtitleLabel;
@@ -41,20 +38,18 @@ public class TextNotification extends ComponentNotification {
 	}
 
 	public String getTitle() {
-		return m_title;
+		return m_titleLabel.getText();
 	}
 
 	public void setTitle(String title) {
 		m_titleLabel.setText(title);
-		m_title = title;
 	}
 
 	public String getSubtitle() {
-		return m_subtitle;
+		return m_subtitleLabel.getText();
 	}
 
 	public void setSubtitle(String subtitle) {
 		m_subtitleLabel.setText(subtitle);
-		m_subtitle = subtitle;
 	}
 }
