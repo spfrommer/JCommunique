@@ -9,7 +9,7 @@ import com.theme.TextTheme;
 /**
  * A text notification which will display a title and a subtitle.
  */
-public class SimpleTextNotification extends ComponentNotification {
+public class TextNotification extends ComponentNotification {
 	private TextTheme m_theme;
 
 	private String m_title;
@@ -18,7 +18,7 @@ public class SimpleTextNotification extends ComponentNotification {
 	private JLabel m_titleLabel;
 	private JLabel m_subtitleLabel;
 
-	public SimpleTextNotification() {
+	public TextNotification() {
 		m_titleLabel = new JLabel();
 		m_subtitleLabel = new JLabel();
 

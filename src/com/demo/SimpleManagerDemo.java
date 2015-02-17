@@ -5,7 +5,7 @@ import com.manager.SimpleManager;
 import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.Location;
 import com.notification.types.IconNotification;
-import com.notification.types.SimpleTextNotification;
+import com.notification.types.TextNotification;
 import com.platform.Platform;
 import com.theme.ThemePackagePresets;
 import com.utils.IconUtils;
@@ -30,7 +30,7 @@ public class SimpleManagerDemo {
 		fade.setFadeTime(Time.seconds(1));
 
 		// adds a text notification to the first manager
-		SimpleTextNotification notification = factory.buildTextNotification("This is a title", "This is a subtitle");
+		TextNotification notification = factory.buildTextNotification("This is a title", "This is a subtitle");
 		notification.setCloseOnClick(true);
 		// the notification will stay there forever until you click it to exit
 		plain.addNotification(notification, Time.infinite());

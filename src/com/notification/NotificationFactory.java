@@ -5,7 +5,7 @@ import java.util.HashMap;
 import javax.swing.ImageIcon;
 
 import com.notification.types.IconNotification;
-import com.notification.types.SimpleTextNotification;
+import com.notification.types.TextNotification;
 import com.theme.ThemePackage;
 import com.theme.ThemePackagePresets;
 
@@ -92,8 +92,8 @@ public final class NotificationFactory {
 	 * @param subtitle
 	 * @return
 	 */
-	public SimpleTextNotification buildTextNotification(String title, String subtitle) {
-		SimpleTextNotification text = new SimpleTextNotification();
+	public TextNotification buildTextNotification(String title, String subtitle) {
+		TextNotification text = new TextNotification();
 		text.setWindowTheme(m_pack.windowTheme);
 		text.setTextTheme(m_pack.textTheme);
 		text.setTitle(title);
