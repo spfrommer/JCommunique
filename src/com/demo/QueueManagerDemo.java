@@ -16,14 +16,12 @@ public class QueueManagerDemo {
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanLight());
 		QueueManager manager = new QueueManager(Location.NORTHWEST);
 
-		Thread.sleep(2000);
-
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 10; i++) {
 			IconNotification note = factory.buildIconNotification("Test", "Subtest",
 					IconUtils.createIcon("/com/demo/exclamation.png", 50, 50));
 			note.setCloseOnClick(true);
 			// make it show in the queue for five seconds
-			manager.addNotification(note, Time.seconds(5));
+			manager.addNotification(note, Time.seconds(10));
 			// one second delay between creations
 			Thread.sleep(1000);
 		}

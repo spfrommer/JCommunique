@@ -31,7 +31,7 @@ public abstract class WindowNotification extends Notification {
 
 		m_listener = new MouseAdapter() {
 			@Override
-			public void mousePressed(MouseEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				fireListeners();
 				if (m_closeOnClick)
 					hide();

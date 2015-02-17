@@ -30,7 +30,7 @@ public class SimpleManagerDemo {
 		fade.setFadeTime(Time.seconds(1));
 
 		// adds a text notification to the first manager
-		SimpleTextNotification notification = factory.buildTextNotification("This is a title", "This is subtext");
+		SimpleTextNotification notification = factory.buildTextNotification("This is a title", "This is a subtitle");
 		notification.setCloseOnClick(true);
 		// the notification will stay there forever until you click it to exit
 		plain.addNotification(notification, Time.infinite());

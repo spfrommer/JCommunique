@@ -12,7 +12,7 @@ import com.theme.ThemePackagePresets;
 /**
  * Creates Notifications using a ThemePackage.
  */
-public class NotificationFactory {
+public final class NotificationFactory {
 	private ThemePackage m_pack;
 	private HashMap<String, NotificationBuilder> m_builders = new HashMap<String, NotificationBuilder>();
 

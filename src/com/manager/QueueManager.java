@@ -98,21 +98,22 @@ public class QueueManager extends SimpleManager {
 				Notification note = notes.get(i);
 				int prevIndex = getPreviousShownIndex(notes, i + 1);
 
+				int dif = 0;
+				int desdif = 0;
 				if (prevIndex == -1) {
-					note.setLocation(x, y);
-					continue;
+					dif = note.getY() - y;
+					desdif = 0;
+				} else {
+					Notification prev = notes.get(prevIndex);
+					dif = note.getY() - prev.getY();
+					if (m_scroll == ScrollDirection.SOUTH) {
+						desdif = prev.getHeight() + m_verticalPadding;
+					} else {
+						desdif = -prev.getHeight() - m_verticalPadding;
+					}
 				}
 
 				// not really sure why this code works, but it does
-				Notification prev = notes.get(prevIndex);
-				int dif = note.getY() - prev.getY();
-				int desdif;
-				if (m_scroll == ScrollDirection.SOUTH) {
-					desdif = prev.getHeight() + m_verticalPadding;
-				} else {
-					desdif = -prev.getHeight() - m_verticalPadding;
-				}
-
 				int delta = desdif - dif;
 				int setNum = delta / 3;
 				if (delta == 0) {
@@ -121,8 +122,7 @@ public class QueueManager extends SimpleManager {
 				if (Math.abs(delta) < 3) {
 					setNum = delta > 0 ? 1 : -1;
 				}
-				// System.out.println("Setting loc");
-				note.setLocation(note.getX(), note.getY() + setNum);
+				note.setLocation(x, note.getY() + setNum);
 			}
 		}
 	}
