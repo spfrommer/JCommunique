@@ -97,7 +97,7 @@ public class SimpleManager extends NotificationManager {
 
 	@Override
 	protected void notificationAdded(Notification note, Time time) {
-		note.setLocation(m_screen.getX(m_loc), m_screen.getY(m_loc));
+		note.setLocation(m_screen.getX(m_loc, note), m_screen.getY(m_loc, note));
 
 		if (Platform.instance().isUsed()) {
 			m_fadeEnabled = Platform.instance().isSupported("fade");

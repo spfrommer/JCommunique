@@ -89,10 +89,12 @@ public class QueueManager extends SimpleManager {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			List<Notification> notes = getNotifications();
+			if (notes.size() == 0)
+				return;
 
 			Location loc = getLocation();
-			int x = getScreen().getX(loc);
-			int y = getScreen().getY(loc);
+			int x = getScreen().getX(loc, notes.get(0));
+			int y = getScreen().getY(loc, notes.get(0));
 
 			for (int i = notes.size() - 1; i >= 0; i--) {
 				Notification note = notes.get(i);

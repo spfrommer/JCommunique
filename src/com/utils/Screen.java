@@ -5,6 +5,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
+import com.notification.Notification;
 import com.notification.NotificationFactory.Location;
 
 public class Screen {
@@ -50,7 +51,7 @@ public class Screen {
 		m_bottomY = m_height - PADDING;
 	}
 
-	public int getX(Location loc) {
+	public int getX(Location loc, Notification note) {
 		switch (loc) {
 		case SOUTHWEST:
 			return m_leftX;
@@ -59,36 +60,36 @@ public class Screen {
 		case NORTHWEST:
 			return m_leftX;
 		case NORTH:
-			return m_centerX;
+			return m_centerX - note.getWidth() / 2;
 		case SOUTH:
-			return m_centerX;
+			return m_centerX - note.getWidth() / 2;
 		case SOUTHEAST:
-			return m_rightX;
+			return m_rightX - note.getWidth();
 		case EAST:
-			return m_rightX;
+			return m_rightX - note.getWidth();
 		case NORTHEAST:
-			return m_rightX;
+			return m_rightX - note.getWidth();
 		default:
 			return -1;
 		}
 	}
 
-	public int getY(Location loc) {
+	public int getY(Location loc, Notification note) {
 		switch (loc) {
 		case SOUTHWEST:
-			return m_bottomY;
+			return m_bottomY - note.getHeight();
 		case WEST:
-			return m_centerY;
+			return m_centerY - note.getHeight() / 2;
 		case NORTHWEST:
 			return m_topY;
 		case NORTH:
 			return m_topY;
 		case SOUTH:
-			return m_bottomY;
+			return m_bottomY - note.getHeight();
 		case SOUTHEAST:
-			return m_bottomY;
+			return m_bottomY - note.getHeight();
 		case EAST:
-			return m_centerY;
+			return m_centerY - note.getHeight() / 2;
 		case NORTHEAST:
 			return m_topY;
 		default:

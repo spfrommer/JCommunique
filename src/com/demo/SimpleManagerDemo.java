@@ -23,9 +23,9 @@ public class SimpleManagerDemo {
 		// makes a factory with the built-in clean theme
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanLight());
 		// a normal manager that just pops up the notification
-		NotificationManager plain = new SimpleManager(Location.NORTHEAST);
+		NotificationManager plain = new SimpleManager(Location.NORTHWEST);
 		// a fade manager that will make the window fade in and out over a two second period
-		SimpleManager fade = new SimpleManager(Location.NORTHWEST);
+		SimpleManager fade = new SimpleManager(Location.SOUTHWEST);
 		fade.setFadeEnabled(true);
 		fade.setFadeTime(Time.seconds(1));
 
