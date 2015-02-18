@@ -18,8 +18,8 @@ public class ThemePackagePresets {
 		window.height = 100;
 
 		TextTheme text = new TextTheme();
-		text.title = new Font("Arial", Font.BOLD, 25);
-		text.subtitle = new Font("Arial", Font.PLAIN, 20);
+		text.title = new Font("Arial", Font.BOLD, 22);
+		text.subtitle = new Font("Arial", Font.PLAIN, 16);
 		text.titleColor = new Color(10, 10, 10);
 		text.subtitleColor = new Color(10, 10, 10);
 
@@ -40,8 +40,8 @@ public class ThemePackagePresets {
 		window.height = 100;
 
 		TextTheme text = new TextTheme();
-		text.title = new Font("Arial", Font.BOLD, 25);
-		text.subtitle = new Font("Arial", Font.PLAIN, 20);
+		text.title = new Font("Arial", Font.BOLD, 22);
+		text.subtitle = new Font("Arial", Font.PLAIN, 16);
 		text.titleColor = new Color(200, 200, 200);
 		text.subtitleColor = new Color(200, 200, 200);
 

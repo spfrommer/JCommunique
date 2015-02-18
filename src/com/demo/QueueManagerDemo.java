@@ -26,9 +26,10 @@ public class QueueManagerDemo {
 				break;
 			case 1:
 				note = factory.buildTextNotification("TextNotification", "Subtitle");
+				break;
 			case 2:
-				note = factory.buildAcceptNotification("AcceptNotification", "Click accept or decline");
-
+				note = factory.buildAcceptNotification("AcceptNotification", "Do you accept?");
+				break;
 			}
 			// note.setCloseOnClick(true);
 			// make it show in the queue for five seconds

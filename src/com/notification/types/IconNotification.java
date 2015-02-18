@@ -26,9 +26,8 @@ public class IconNotification extends BorderLayoutNotification {
 
 	public static final int ICON_PADDING = 10;
 
-	public IconNotification(ImageIcon icon) {
+	public IconNotification() {
 		m_iconLabel = new JLabel();
-		m_iconLabel.setIcon(icon);
 		m_titleLabel = new JLabel();
 		m_subtitleLabel = new JLabel();
 
@@ -50,6 +49,40 @@ public class IconNotification extends BorderLayoutNotification {
 		m_iconLabel.setIcon(icon);
 	}
 
+	/**
+	 * @return the title String
+	 */
+	public String getTitle() {
+		return m_title;
+	}
+
+	/**
+	 * Sets the title String.
+	 * 
+	 * @param title
+	 */
+	public void setTitle(String title) {
+		m_titleLabel.setText(title);
+		m_title = title;
+	}
+
+	/**
+	 * @return the subtitle String
+	 */
+	public String getSubtitle() {
+		return m_subtitle;
+	}
+
+	/**
+	 * Sets the subtitle String.
+	 * 
+	 * @param subtitle
+	 */
+	public void setSubtitle(String subtitle) {
+		m_subtitleLabel.setText(subtitle);
+		m_subtitle = subtitle;
+	}
+
 	protected TextTheme getTextTheme() {
 		return m_theme;
 	}
@@ -64,24 +97,6 @@ public class IconNotification extends BorderLayoutNotification {
 		m_subtitleLabel.setFont(theme.subtitle);
 		m_titleLabel.setForeground(theme.titleColor);
 		m_subtitleLabel.setForeground(theme.subtitleColor);
-	}
-
-	public String getTitle() {
-		return m_title;
-	}
-
-	public void setTitle(String title) {
-		m_titleLabel.setText(title);
-		m_title = title;
-	}
-
-	public String getSubtitle() {
-		return m_subtitle;
-	}
-
-	public void setSubtitle(String subtitle) {
-		m_subtitleLabel.setText(subtitle);
-		m_subtitle = subtitle;
 	}
 
 	@Override

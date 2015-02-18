@@ -154,11 +154,12 @@ public final class NotificationFactory {
 	 * @return
 	 */
 	public IconNotification buildIconNotification(String title, String subtitle, ImageIcon icon) {
-		IconNotification iconNote = new IconNotification(icon);
+		IconNotification iconNote = new IconNotification();
 		iconNote.setWindowTheme(m_pack.windowTheme);
 		iconNote.setTextTheme(m_pack.textTheme);
 		iconNote.setTitle(title);
 		iconNote.setSubtitle(subtitle);
+		iconNote.setIcon(icon);
 
 		return iconNote;
 	}
