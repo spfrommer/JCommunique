@@ -95,7 +95,9 @@ public abstract class WindowNotification extends Notification {
 		m_panel.setBackground(theme.background);
 		m_panel.setForeground(theme.foreground);
 
-		themeSet(theme);
+		for (Component comp : m_panel.getComponents()) {
+			recursiveSetTheme(theme, comp);
+		}
 	}
 
 	private void recursiveSetTheme(WindowTheme theme, Component comp) {
@@ -107,12 +109,6 @@ public abstract class WindowNotification extends Notification {
 			for (Component component : container.getComponents()) {
 				recursiveSetTheme(theme, component);
 			}
-		}
-	}
-
-	protected void themeSet(WindowTheme theme) {
-		for (Component comp : m_panel.getComponents()) {
-			recursiveSetTheme(theme, comp);
 		}
 	}
 

@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 
+import com.notification.types.AcceptNotification;
 import com.notification.types.IconNotification;
 import com.notification.types.TextNotification;
 import com.theme.ThemePackage;
@@ -100,6 +101,48 @@ public final class NotificationFactory {
 		text.setSubtitle(subtitle);
 
 		return text;
+	}
+
+	/**
+	 * Builds an AcceptNotification with "Accept" and "Decline" as the button messages.
+	 * 
+	 * @param title
+	 * @param subtitle
+	 * @return
+	 */
+	public AcceptNotification buildAcceptNotification(String title, String subtitle) {
+		AcceptNotification accept = new AcceptNotification();
+		accept.setWindowTheme(m_pack.windowTheme);
+		accept.setTextTheme(m_pack.textTheme);
+		accept.setTitle(title);
+		accept.setSubtitle(subtitle);
+		accept.setAcceptText("Accept");
+		accept.setDeclineText("Decline");
+
+		return accept;
+	}
+
+	/**
+	 * Builds an AcceptNotification with the specified Strings.
+	 * 
+	 * @param title
+	 * @param subtitle
+	 * @param acceptText
+	 *            the text on the accept button
+	 * @param declineText
+	 *            the text on the decline button
+	 * @return
+	 */
+	public AcceptNotification buildAcceptNotification(String title, String subtitle, String acceptText, String declineText) {
+		AcceptNotification accept = new AcceptNotification();
+		accept.setWindowTheme(m_pack.windowTheme);
+		accept.setTextTheme(m_pack.textTheme);
+		accept.setTitle(title);
+		accept.setSubtitle(subtitle);
+		accept.setAcceptText(acceptText);
+		accept.setDeclineText(declineText);
+
+		return accept;
 	}
 
 	/**

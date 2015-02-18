@@ -4,6 +4,7 @@ import com.manager.NotificationManager;
 import com.manager.SimpleManager;
 import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.Location;
+import com.notification.types.AcceptNotification;
 import com.notification.types.IconNotification;
 import com.notification.types.TextNotification;
 import com.platform.Platform;
@@ -39,7 +40,20 @@ public class SimpleManagerDemo {
 		// adds an icon notification that should fade in - note that results may vary depending on the platform
 		IconNotification icon = factory.buildIconNotification("This is a really really really long title", "See the cutoff?",
 				IconUtils.createIcon("/com/demo/exclamation.png", 50, 50));
-		// the notification will automatically fade out after five seconds
-		fade.addNotification(icon, Time.seconds(5));
+		new SimpleManager(Location.WEST).addNotification(icon, Time.seconds(2));
+
+		Thread.sleep(2000);
+		AcceptNotification accept = factory.buildAcceptNotification("Do you accept?", "This is a test.");
+		fade.addNotification(accept, Time.seconds(4));
+
+		boolean didAccept = accept.blockUntilReply();
+		TextNotification reply = null;
+		if (didAccept) {
+			reply = factory.buildTextNotification("You accepted", "");
+		} else {
+			reply = factory.buildTextNotification("You did not accept", "");
+		}
+		reply.setCloseOnClick(true);
+		fade.addNotification(reply, Time.infinite());
 	}
 }

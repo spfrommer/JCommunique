@@ -17,7 +17,7 @@ import com.theme.ThemePackage;
 import com.theme.WindowTheme;
 
 /**
- * This is a CustomNotification which will only have one line of text.
+ * This is a CustomNotification which will only have one line of text and a button that will turn into a progress bar.
  */
 public class CustomNotification extends BorderLayoutNotification {
 	private JLabel m_label;
@@ -65,7 +65,6 @@ public class CustomNotification extends BorderLayoutNotification {
 	 * @param theme
 	 */
 	public void setTextTeme(TextTheme theme) {
-		System.out.println("Text theme set");
 		m_label.setFont(theme.title);
 		m_label.setForeground(theme.titleColor);
 		m_button.setFont(theme.subtitle);
@@ -83,13 +82,12 @@ public class CustomNotification extends BorderLayoutNotification {
 	}
 
 	@Override
-	protected void themeSet(WindowTheme theme) {
-		super.themeSet(theme);
+	public void setWindowTheme(WindowTheme theme) {
+		super.setWindowTheme(theme);
 
 		if (m_theme != null) {
 			// the WindowNotification is going to automatically give all our labels with the set foreground color, but
-			// we
-			// want to change this to the title color of the font
+			// we want to change this to the title color of the font
 			m_label.setForeground(m_theme.titleColor);
 			m_button.setForeground(m_theme.subtitleColor);
 		}

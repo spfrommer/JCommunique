@@ -11,7 +11,7 @@ import com.theme.WindowTheme;
  * A text notification which will display a title and a subtitle.
  */
 public class TextNotification extends BorderLayoutNotification {
-	private TextTheme m_theme;
+	private TextTheme m_textTheme;
 
 	private JLabel m_titleLabel;
 	private JLabel m_subtitleLabel;
@@ -22,22 +22,6 @@ public class TextNotification extends BorderLayoutNotification {
 
 		this.addComponent(m_titleLabel, BorderLayout.NORTH);
 		this.addComponent(m_subtitleLabel, BorderLayout.CENTER);
-	}
-
-	protected TextTheme getTextTheme() {
-		return m_theme;
-	}
-
-	/**
-	 * @param theme
-	 *            the two Fonts that should be used.
-	 */
-	public void setTextTheme(TextTheme theme) {
-		m_theme = theme;
-		m_titleLabel.setFont(theme.title);
-		m_subtitleLabel.setFont(theme.subtitle);
-		m_titleLabel.setForeground(theme.titleColor);
-		m_subtitleLabel.setForeground(theme.subtitleColor);
 	}
 
 	public String getTitle() {
@@ -56,13 +40,29 @@ public class TextNotification extends BorderLayoutNotification {
 		m_subtitleLabel.setText(subtitle);
 	}
 
-	@Override
-	protected void themeSet(WindowTheme theme) {
-		super.themeSet(theme);
+	protected TextTheme getTextTheme() {
+		return m_textTheme;
+	}
 
-		if (m_theme != null) {
-			m_titleLabel.setForeground(m_theme.titleColor);
-			m_subtitleLabel.setForeground(m_theme.subtitleColor);
+	/**
+	 * @param theme
+	 *            the two Fonts that should be used.
+	 */
+	public void setTextTheme(TextTheme theme) {
+		m_textTheme = theme;
+		m_titleLabel.setFont(theme.title);
+		m_subtitleLabel.setFont(theme.subtitle);
+		m_titleLabel.setForeground(theme.titleColor);
+		m_subtitleLabel.setForeground(theme.subtitleColor);
+	}
+
+	@Override
+	public void setWindowTheme(WindowTheme theme) {
+		super.setWindowTheme(theme);
+
+		if (m_textTheme != null) {
+			m_titleLabel.setForeground(m_textTheme.titleColor);
+			m_subtitleLabel.setForeground(m_textTheme.subtitleColor);
 		}
 	}
 }

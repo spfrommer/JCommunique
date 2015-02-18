@@ -14,7 +14,7 @@ import com.theme.WindowTheme;
  * An IconNotification displays text, but with an icon.
  */
 public class IconNotification extends BorderLayoutNotification {
-	private TextTheme m_theme;
+	protected TextTheme m_theme;
 
 	private String m_title;
 	private String m_subtitle;
@@ -85,8 +85,8 @@ public class IconNotification extends BorderLayoutNotification {
 	}
 
 	@Override
-	public void themeSet(WindowTheme theme) {
-		super.themeSet(theme);
+	public void setWindowTheme(WindowTheme theme) {
+		super.setWindowTheme(theme);
 
 		if (m_theme != null) {
 			m_titleLabel.setForeground(m_theme.titleColor);
