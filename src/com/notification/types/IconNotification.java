@@ -62,6 +62,8 @@ public class IconNotification extends BorderLayoutNotification {
 		m_theme = theme;
 		m_titleLabel.setFont(theme.title);
 		m_subtitleLabel.setFont(theme.subtitle);
+		m_titleLabel.setForeground(theme.titleColor);
+		m_subtitleLabel.setForeground(theme.subtitleColor);
 	}
 
 	public String getTitle() {
@@ -85,10 +87,10 @@ public class IconNotification extends BorderLayoutNotification {
 	@Override
 	public void themeSet(WindowTheme theme) {
 		super.themeSet(theme);
-		m_titleLabel.setBackground(theme.background);
-		m_subtitleLabel.setBackground(theme.background);
 
-		m_titleLabel.setForeground(theme.foreground);
-		m_subtitleLabel.setForeground(theme.foreground);
+		if (m_theme != null) {
+			m_titleLabel.setForeground(m_theme.titleColor);
+			m_subtitleLabel.setForeground(m_theme.subtitleColor);
+		}
 	}
 }

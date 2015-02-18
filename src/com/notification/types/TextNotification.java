@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 
 import com.theme.TextTheme;
+import com.theme.WindowTheme;
 
 /**
  * A text notification which will display a title and a subtitle.
@@ -35,6 +36,8 @@ public class TextNotification extends BorderLayoutNotification {
 		m_theme = theme;
 		m_titleLabel.setFont(theme.title);
 		m_subtitleLabel.setFont(theme.subtitle);
+		m_titleLabel.setForeground(theme.titleColor);
+		m_subtitleLabel.setForeground(theme.subtitleColor);
 	}
 
 	public String getTitle() {
@@ -51,5 +54,15 @@ public class TextNotification extends BorderLayoutNotification {
 
 	public void setSubtitle(String subtitle) {
 		m_subtitleLabel.setText(subtitle);
+	}
+
+	@Override
+	protected void themeSet(WindowTheme theme) {
+		super.themeSet(theme);
+
+		if (m_theme != null) {
+			m_titleLabel.setForeground(m_theme.titleColor);
+			m_subtitleLabel.setForeground(m_theme.subtitleColor);
+		}
 	}
 }
