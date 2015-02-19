@@ -12,10 +12,10 @@ public class CustomNotificationDemo {
 		// UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 		// register the custom builder with the factory
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanLight());
-		factory.addBuilder("custom", new CustomNotification.CustomBuilder());
+		factory.addBuilder(CustomNotification.class, new CustomNotification.CustomBuilder());
 
 		// add the Notification
 		NotificationManager manager = new SimpleManager(Location.NORTH);
-		manager.addNotification(factory.build("custom", "this is test text"), Time.infinite());
+		manager.addNotification(factory.build(CustomNotification.class, "this is test text"), Time.infinite());
 	}
 }

@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
-import com.notification.Notification;
 import com.notification.NotificationBuilder;
 import com.notification.types.BorderLayoutNotification;
 import com.theme.TextTheme;
@@ -93,9 +92,9 @@ public class CustomNotification extends BorderLayoutNotification {
 		}
 	}
 
-	public static class CustomBuilder implements NotificationBuilder {
+	public static class CustomBuilder implements NotificationBuilder<CustomNotification> {
 		@Override
-		public Notification buildNotification(ThemePackage pack, Object[] args) {
+		public CustomNotification buildNotification(ThemePackage pack, Object[] args) {
 			CustomNotification notification = new CustomNotification();
 			// handled by WindowNotification
 			notification.setWindowTheme(pack.windowTheme);

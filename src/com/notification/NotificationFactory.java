@@ -11,14 +11,19 @@ import com.theme.ThemePackage;
 import com.theme.ThemePackagePresets;
 
 /**
- * Creates Notifications using a ThemePackage.
+ * Creates Notifications using a ThemePackage. It is possible to add custom Notifications by adding
+ * NotificationBuilders.
  */
 public final class NotificationFactory {
 	private ThemePackage m_pack;
-	private HashMap<String, NotificationBuilder> m_builders = new HashMap<String, NotificationBuilder>();
+	private HashMap<Class<? extends Notification>, NotificationBuilder<? extends Notification>> m_builders;
 
 	public enum Location {
 		NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST
+	}
+
+	{
+		m_builders = new HashMap<Class<? extends Notification>, NotificationBuilder<? extends Notification>>();
 	}
 
 	public NotificationFactory() {
@@ -42,47 +47,51 @@ public final class NotificationFactory {
 	/**
 	 * Adds a custom NotificationBuilder. Notifications can then be built using build(String name).
 	 * 
-	 * @param name
+	 * @param clazz
 	 * @param builder
 	 */
-	public void addBuilder(String name, NotificationBuilder builder) {
-		m_builders.put(name, builder);
+	public <T extends Notification> void addBuilder(Class<T> clazz, NotificationBuilder<T> builder) {
+		m_builders.put(clazz, builder);
 	}
 
 	/**
 	 * Removes the NotificationBuilder associated with this name.
 	 * 
-	 * @param name
+	 * @param clazz
 	 */
-	public void removeBuilder(String name) {
-		m_builders.remove(name);
+	public <T extends Notification> void removeBuilder(Class<T> clazz) {
+		m_builders.remove(clazz);
 	}
 
 	/**
 	 * Builds a Notification using the NotificationBuilder associated with the name.
 	 * 
-	 * @param name
+	 * @param clazz
 	 * @return
 	 */
-	public Notification build(String name) {
-		if (!m_builders.containsKey(name))
-			throw new RuntimeException("No NotificationBuilder for: " + name);
-		Notification note = m_builders.get(name).buildNotification(m_pack, new Object[0]);
+	public <T extends Notification> T build(Class<T> clazz) {
+		if (!m_builders.containsKey(clazz))
+			throw new RuntimeException("No NotificationBuilder for: " + clazz);
+
+		@SuppressWarnings("unchecked")
+		T note = (T) m_builders.get(clazz).buildNotification(m_pack, new Object[0]);
 		return note;
 	}
 
 	/**
 	 * Builds a Notification using the NotificationBuilder associated with the name.
 	 * 
-	 * @param name
+	 * @param clazz
 	 * @param args
 	 *            the args passed to the NotificationBuilder
 	 * @return
 	 */
-	public Notification build(String name, Object... args) {
-		if (!m_builders.containsKey(name))
-			throw new RuntimeException("No NotificationBuilder for: " + name);
-		Notification note = m_builders.get(name).buildNotification(m_pack, args);
+	public <T extends Notification> T build(Class<T> clazz, Object... args) {
+		if (!m_builders.containsKey(clazz))
+			throw new RuntimeException("No NotificationBuilder for: " + clazz);
+
+		@SuppressWarnings("unchecked")
+		T note = (T) m_builders.get(clazz).buildNotification(m_pack, args);
 		return note;
 	}
 

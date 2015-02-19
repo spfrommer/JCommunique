@@ -4,14 +4,17 @@ import com.theme.ThemePackage;
 
 /**
  * This interface is implemented for building custom Notifications.
+ * 
+ * @param <T>
+ *            the type to build
  */
-public interface NotificationBuilder {
+public interface NotificationBuilder<T extends Notification> {
 	/**
 	 * Builds a Notification in accordance with the ThemePackage.
 	 * 
 	 * @param pack
 	 * @param args
-	 * @return
+	 * @return the built Notification
 	 */
-	public Notification buildNotification(ThemePackage pack, Object[] args);
+	public T buildNotification(ThemePackage pack, Object[] args);
 }
