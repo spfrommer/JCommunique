@@ -104,17 +104,15 @@ public class SimpleManager extends NotificationManager {
 		}
 
 		if (m_fadeEnabled) {
-			double frequency = 100f;
+			double frequency = 100;
 			double opacity = note.getOpacity();
 
 			note.setOpacity(0);
 			Timer timer = new Timer((int) frequency, new Fader(note, getDeltaFade(opacity, frequency), opacity));
 			timer.start();
-
-			note.show();
-		} else {
-			note.show();
 		}
+
+		note.show();
 
 		if (!time.isInfinite()) {
 			java.util.Timer removeTimer = new java.util.Timer();
@@ -129,7 +127,7 @@ public class SimpleManager extends NotificationManager {
 		}
 
 		if (m_fadeEnabled) {
-			double frequency = 50f;
+			double frequency = 50;
 
 			Timer timer = new Timer((int) frequency, new Fader(note, -getDeltaFade(note.getOpacity(), frequency), 0));
 			timer.start();

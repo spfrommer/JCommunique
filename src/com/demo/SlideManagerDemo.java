@@ -11,7 +11,7 @@ public class SlideManagerDemo {
 	public static void main(String[] args) throws Exception {
 		// makes a factory with the clean theme
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanLight());
-		// adds a new manager which displays Notifications at the bottom of the screen
+		// adds a new manager which displays Notifications at the bottom right of the screen
 		SlideManager manager = new SlideManager(Location.SOUTHEAST);
 
 		// adds a notification that appears southeast and slides in the default direction, north

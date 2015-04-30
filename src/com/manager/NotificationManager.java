@@ -7,7 +7,7 @@ import com.notification.Notification;
 import com.utils.Time;
 
 /**
- * Manages the creation and movement of Notifications. Once a notification is added, all aspects of it except for click
+ * Manages the creation and movement of Notifications. Once a Notification is added, all aspects of it except for click
  * handeling are managed by the NotificationManager. This includes things such as showing and hiding.
  */
 public abstract class NotificationManager {
@@ -19,7 +19,7 @@ public abstract class NotificationManager {
 
 	/**
 	 * Adds a Notification and will also make it visible.
-	 * 
+	 *
 	 * @param note
 	 * @param time
 	 *            the amount of time the Notification should display (e.g., Time.seconds(1) will make the Notification
@@ -32,7 +32,7 @@ public abstract class NotificationManager {
 
 	/**
 	 * Removes a Notification and will also hide it.
-	 * 
+	 *
 	 * @param note
 	 */
 	public final void removeNotification(Notification note) {
