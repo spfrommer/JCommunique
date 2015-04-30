@@ -6,6 +6,7 @@ import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.Location;
 import com.notification.types.AcceptNotification;
 import com.notification.types.IconNotification;
+import com.notification.types.ProgressBarNotification;
 import com.notification.types.TextNotification;
 import com.platform.Platform;
 import com.theme.ThemePackagePresets;
@@ -47,13 +48,18 @@ public class SimpleManagerDemo {
 		fade.addNotification(accept, Time.seconds(4));
 
 		boolean didAccept = accept.blockUntilReply();
-		TextNotification reply = null;
+		ProgressBarNotification reply = null;
 		if (didAccept) {
-			reply = factory.buildTextNotification("You accepted", "");
+			reply = factory.buildProgressBarNotification("You accepted");
 		} else {
-			reply = factory.buildTextNotification("You did not accept", "");
+			reply = factory.buildProgressBarNotification("You did not accept");
 		}
 		reply.setCloseOnClick(true);
 		fade.addNotification(reply, Time.infinite());
+
+		for (int i = 0; i < 100; i++) {
+			reply.setProgress(i);
+			Thread.sleep(100);
+		}
 	}
 }

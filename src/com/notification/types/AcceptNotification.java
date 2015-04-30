@@ -1,6 +1,7 @@
 package com.notification.types;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.theme.TextTheme;
 import com.theme.WindowTheme;
 
 /**
@@ -58,7 +58,7 @@ public class AcceptNotification extends TextNotification {
 	/**
 	 * Will wait for the user to click a button (if the Notification hides, this method will act as if the user clicked
 	 * deny).
-	 * 
+	 *
 	 * @return the user's response
 	 */
 	public boolean blockUntilReply() {
@@ -73,7 +73,7 @@ public class AcceptNotification extends TextNotification {
 
 	/**
 	 * Sets the preferred size of the buttons.
-	 * 
+	 *
 	 * @param d
 	 */
 	public void setButtonDimensions(Dimension d) {
@@ -90,7 +90,7 @@ public class AcceptNotification extends TextNotification {
 
 	/**
 	 * Sets the text on the accept button.
-	 * 
+	 *
 	 * @param acceptText
 	 */
 	public void setAcceptText(String acceptText) {
@@ -106,7 +106,7 @@ public class AcceptNotification extends TextNotification {
 
 	/**
 	 * Sets the text on the decline button.
-	 * 
+	 *
 	 * @param declineText
 	 */
 	public void setDeclineText(String declineText) {
@@ -128,20 +128,12 @@ public class AcceptNotification extends TextNotification {
 	}
 
 	@Override
-	public void setTextTheme(TextTheme theme) {
-		super.setTextTheme(theme);
-
-		m_accept.setForeground(theme.subtitleColor);
-		m_decline.setForeground(theme.subtitleColor);
-	}
-
-	@Override
 	public void setWindowTheme(WindowTheme theme) {
 		super.setWindowTheme(theme);
 
-		if (getTextTheme() != null) {
-			m_accept.setForeground(getTextTheme().subtitleColor);
-			m_decline.setForeground(getTextTheme().subtitleColor);
-		}
+		// override any color setting done automatically by the WindowTheme
+		// since black is the only color that looks good on buttons
+		m_accept.setForeground(Color.black);
+		m_decline.setForeground(Color.black);
 	}
 }

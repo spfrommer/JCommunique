@@ -19,10 +19,9 @@ public abstract class WindowNotification extends Notification {
 	private JWindow m_window;
 	private JPanel m_panel;
 	private boolean m_closeOnClick;
+	private MouseAdapter m_listener;
 
 	private WindowTheme m_theme;
-
-	private MouseAdapter m_listener;
 
 	private static final int DEFAULT_WIDTH = 300;
 	private static final int DEFAULT_HEIGHT = 100;
@@ -81,7 +80,7 @@ public abstract class WindowNotification extends Notification {
 	/**
 	 * Sets the theme of the WindowNotification. It is up to the subclasses how they want to interpret the "image"
 	 * attribute of the theme.
-	 * 
+	 *
 	 * @param theme
 	 */
 	public void setWindowTheme(WindowTheme theme) {
@@ -144,7 +143,7 @@ public abstract class WindowNotification extends Notification {
 
 	/**
 	 * Gets the opacity of the window between 0 and 1.
-	 * 
+	 *
 	 * @return
 	 */
 	@Override
@@ -154,7 +153,7 @@ public abstract class WindowNotification extends Notification {
 
 	/**
 	 * Sets the opacity, overriding the value given in the window theme.
-	 * 
+	 *
 	 * @param opacity
 	 *            the opacity (clamped to between 0 and 1)
 	 */

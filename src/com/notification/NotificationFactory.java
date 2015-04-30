@@ -6,6 +6,7 @@ import javax.swing.ImageIcon;
 
 import com.notification.types.AcceptNotification;
 import com.notification.types.IconNotification;
+import com.notification.types.ProgressBarNotification;
 import com.notification.types.TextNotification;
 import com.theme.ThemePackage;
 import com.theme.ThemePackagePresets;
@@ -79,19 +80,19 @@ public final class NotificationFactory {
 	}
 
 	/**
-	 * Builds a Notification using the NotificationBuilder associated with the name.
+	 * Builds a Notification using the NotificationBuilder associated with the notification class.
 	 *
-	 * @param clazz
+	 * @param notificationClass
 	 * @param args
 	 *            the args passed to the NotificationBuilder
 	 * @return
 	 */
-	public <T extends Notification> T build(Class<T> clazz, Object... args) {
-		if (!m_builders.containsKey(clazz))
-			throw new RuntimeException("No NotificationBuilder for: " + clazz);
+	public <T extends Notification> T build(Class<T> notificationClass, Object... args) {
+		if (!m_builders.containsKey(notificationClass))
+			throw new RuntimeException("No NotificationBuilder for: " + notificationClass);
 
 		@SuppressWarnings("unchecked")
-		T note = (T) m_builders.get(clazz).buildNotification(m_pack, args);
+		T note = (T) m_builders.get(notificationClass).buildNotification(m_pack, args);
 		return note;
 	}
 
@@ -171,5 +172,19 @@ public final class NotificationFactory {
 		iconNote.setIcon(icon);
 
 		return iconNote;
+	}
+
+	/**
+	 * Builds a ProgressBarNotification.
+	 *
+	 * @param title
+	 * @return
+	 */
+	public ProgressBarNotification buildProgressBarNotification(String title) {
+		ProgressBarNotification progress = new ProgressBarNotification();
+		progress.setWindowTheme(m_pack.windowTheme);
+		progress.setTextTeme(m_pack.textTheme);
+		progress.setTitle(title);
+		return progress;
 	}
 }

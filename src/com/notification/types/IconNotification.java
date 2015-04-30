@@ -14,8 +14,6 @@ import com.theme.WindowTheme;
  * An IconNotification displays text, but with an icon.
  */
 public class IconNotification extends BorderLayoutNotification {
-	protected TextTheme m_theme;
-
 	private String m_title;
 	private String m_subtitle;
 
@@ -23,6 +21,8 @@ public class IconNotification extends BorderLayoutNotification {
 	private JLabel m_subtitleLabel;
 
 	private JLabel m_iconLabel;
+
+	protected TextTheme m_theme;
 
 	public static final int ICON_PADDING = 10;
 
@@ -42,7 +42,7 @@ public class IconNotification extends BorderLayoutNotification {
 
 	/**
 	 * Sets the icon to use.
-	 * 
+	 *
 	 * @param icon
 	 */
 	public void setIcon(ImageIcon icon) {
@@ -58,7 +58,7 @@ public class IconNotification extends BorderLayoutNotification {
 
 	/**
 	 * Sets the title String.
-	 * 
+	 *
 	 * @param title
 	 */
 	public void setTitle(String title) {
@@ -75,7 +75,7 @@ public class IconNotification extends BorderLayoutNotification {
 
 	/**
 	 * Sets the subtitle String.
-	 * 
+	 *
 	 * @param subtitle
 	 */
 	public void setSubtitle(String subtitle) {
