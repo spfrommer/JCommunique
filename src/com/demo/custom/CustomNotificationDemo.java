@@ -4,11 +4,13 @@ import com.manager.NotificationManager;
 import com.manager.SimpleManager;
 import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.Location;
+import com.platform.Platform;
 import com.theme.ThemePackagePresets;
 import com.utils.Time;
 
 public class CustomNotificationDemo {
 	public static void main(String[] args) throws Exception {
+		Platform.instance().setAdjustForPlatform(true);
 		// UIManager.setLookAndFeel("com.sun.java.swing.plaf.motif.MotifLookAndFeel");
 		// register the custom builder with the factory
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanLight());

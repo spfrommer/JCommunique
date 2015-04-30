@@ -37,7 +37,7 @@ public final class NotificationFactory {
 	/**
 	 * Sets the themes that the factory should use when creating notifications. See ThemePackagePresets for some default
 	 * themes.
-	 * 
+	 *
 	 * @param pack
 	 */
 	public void setThemePackage(ThemePackage pack) {
@@ -45,42 +45,42 @@ public final class NotificationFactory {
 	}
 
 	/**
-	 * Adds a custom NotificationBuilder. Notifications can then be built using build(String name).
-	 * 
-	 * @param clazz
+	 * Adds a custom NotificationBuilder. Notifications can then be built using build(Class notificationClass).
+	 *
+	 * @param notificationClass
 	 * @param builder
 	 */
-	public <T extends Notification> void addBuilder(Class<T> clazz, NotificationBuilder<T> builder) {
-		m_builders.put(clazz, builder);
+	public <T extends Notification> void addBuilder(Class<T> notificationClass, NotificationBuilder<T> builder) {
+		m_builders.put(notificationClass, builder);
 	}
 
 	/**
-	 * Removes the NotificationBuilder associated with this name.
-	 * 
-	 * @param clazz
+	 * Removes the NotificationBuilder associated with this notification class.
+	 *
+	 * @param notificationClass
 	 */
-	public <T extends Notification> void removeBuilder(Class<T> clazz) {
-		m_builders.remove(clazz);
+	public <T extends Notification> void removeBuilder(Class<T> notificationClass) {
+		m_builders.remove(notificationClass);
 	}
 
 	/**
-	 * Builds a Notification using the NotificationBuilder associated with the name.
-	 * 
-	 * @param clazz
+	 * Builds a Notification using the NotificationBuilder associated with the notification class.
+	 *
+	 * @param notificationClass
 	 * @return
 	 */
-	public <T extends Notification> T build(Class<T> clazz) {
-		if (!m_builders.containsKey(clazz))
-			throw new RuntimeException("No NotificationBuilder for: " + clazz);
+	public <T extends Notification> T build(Class<T> notificationClass) {
+		if (!m_builders.containsKey(notificationClass))
+			throw new RuntimeException("No NotificationBuilder for: " + notificationClass);
 
 		@SuppressWarnings("unchecked")
-		T note = (T) m_builders.get(clazz).buildNotification(m_pack, new Object[0]);
+		T note = (T) m_builders.get(notificationClass).buildNotification(m_pack, new Object[0]);
 		return note;
 	}
 
 	/**
 	 * Builds a Notification using the NotificationBuilder associated with the name.
-	 * 
+	 *
 	 * @param clazz
 	 * @param args
 	 *            the args passed to the NotificationBuilder
@@ -97,7 +97,7 @@ public final class NotificationFactory {
 
 	/**
 	 * Builds a SimpleTextNotification.
-	 * 
+	 *
 	 * @param title
 	 * @param subtitle
 	 * @return
@@ -114,7 +114,7 @@ public final class NotificationFactory {
 
 	/**
 	 * Builds an AcceptNotification with "Accept" and "Decline" as the button messages.
-	 * 
+	 *
 	 * @param title
 	 * @param subtitle
 	 * @return
@@ -133,7 +133,7 @@ public final class NotificationFactory {
 
 	/**
 	 * Builds an AcceptNotification with the specified Strings.
-	 * 
+	 *
 	 * @param title
 	 * @param subtitle
 	 * @param acceptText
@@ -156,7 +156,7 @@ public final class NotificationFactory {
 
 	/**
 	 * Builds an IconNotification.
-	 * 
+	 *
 	 * @param title
 	 * @param subtitle
 	 * @param icon

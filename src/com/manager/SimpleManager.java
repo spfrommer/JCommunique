@@ -23,18 +23,18 @@ public class SimpleManager extends NotificationManager {
 	private boolean m_fadeEnabled = false;
 	private Time m_fadeTime;
 
-	public SimpleManager() {
-		m_loc = Location.NORTHEAST;
-		m_screen = new Screen(true);
+	{
+		m_screen = Screen.standard();
 		m_fadeEnabled = false;
 		m_fadeTime = Time.seconds(1);
 	}
 
+	public SimpleManager() {
+		m_loc = Location.NORTHEAST;
+	}
+
 	public SimpleManager(Location loc) {
 		m_loc = loc;
-		m_screen = new Screen(true);
-		m_fadeEnabled = false;
-		m_fadeTime = Time.seconds(1);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class SimpleManager extends NotificationManager {
 
 	/**
 	 * Sets the fade time. To enable, call setFadeEnabled(boolean).
-	 * 
+	 *
 	 * @param fadeTime
 	 */
 	public void setFadeTime(Time fadeTime) {
@@ -62,7 +62,7 @@ public class SimpleManager extends NotificationManager {
 
 	/**
 	 * Sets whether or not fading is enabled.
-	 * 
+	 *
 	 * @param fadeEnabled
 	 */
 	public void setFadeEnabled(boolean fadeEnabled) {
@@ -78,7 +78,7 @@ public class SimpleManager extends NotificationManager {
 
 	/**
 	 * Sets the location where the Notifications show up.
-	 * 
+	 *
 	 * @param loc
 	 */
 	public void setLocation(Location loc) {

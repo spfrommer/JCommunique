@@ -5,6 +5,8 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
+import javax.swing.UIManager;
+
 import com.notification.Notification;
 import com.notification.NotificationFactory.Location;
 
@@ -20,14 +22,40 @@ public class Screen {
 	private int m_centerY;
 	private int m_bottomY;
 
-	public static final int PADDING = 80;
+	private int m_padding;
 
-	/**
-	 * @param spanMultiple
-	 *            whether the Screen should span all monitors on a multi-monitor device
-	 */
-	public Screen(boolean spanMultiple) {
-		if (spanMultiple) {
+	static {
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private Screen(boolean spanMultipleMonitors, int padding) {
+		m_padding = padding;
+		setupDimensions(spanMultipleMonitors);
+		calculatePositions();
+	}
+
+	public static Screen standard() {
+		return new Screen(true, 80);
+	}
+
+	public static Screen withSpan(boolean spanMultipleMonitors) {
+		return new Screen(spanMultipleMonitors, 80);
+	}
+
+	public static Screen withPadding(int padding) {
+		return new Screen(true, padding);
+	}
+
+	public static Screen withSpanAndPadding(boolean spanMultipleMonitors, int padding) {
+		return new Screen(spanMultipleMonitors, padding);
+	}
+
+	private void setupDimensions(boolean spanMultipleMonitors) {
+		if (spanMultipleMonitors) {
 			Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 			m_width = screenSize.width;
 			m_height = screenSize.height;
@@ -37,18 +65,16 @@ public class Screen {
 			m_width = gd.getDisplayMode().getWidth();
 			m_height = gd.getDisplayMode().getHeight();
 		}
-
-		calculatePositions();
 	}
 
 	private void calculatePositions() {
-		m_leftX = PADDING;
+		m_leftX = m_padding;
 		m_centerX = (int) (m_width / 2d);
-		m_rightX = m_width - PADDING;
+		m_rightX = m_width - m_padding;
 
-		m_topY = PADDING;
+		m_topY = m_padding;
 		m_centerY = (int) (m_height / 2d);
-		m_bottomY = m_height - PADDING;
+		m_bottomY = m_height - m_padding;
 	}
 
 	public int getX(Location loc, Notification note) {
