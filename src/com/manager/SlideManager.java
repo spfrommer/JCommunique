@@ -194,30 +194,31 @@ public class SlideManager extends NotificationManager {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			m_x += m_deltaX;
+			m_y += m_deltaY;
+
 			if (m_dir == SlideDirection.SOUTH) {
-				if (m_y > m_stopY) {
+				if (m_y >= m_stopY) {
 					m_y = m_stopY;
 					((Timer) e.getSource()).stop();
 				}
 			} else if (m_dir == SlideDirection.NORTH) {
-				if (m_y < m_stopY) {
+				if (m_y <= m_stopY) {
 					m_y = m_stopY;
 					((Timer) e.getSource()).stop();
 				}
 			} else if (m_dir == SlideDirection.EAST) {
-				if (m_x > m_stopX) {
+				if (m_x >= m_stopX) {
 					m_x = m_stopX;
 					((Timer) e.getSource()).stop();
 				}
 			} else if (m_dir == SlideDirection.WEST) {
-				if (m_x < m_stopX) {
+				if (m_x <= m_stopX) {
 					m_x = m_stopX;
 					((Timer) e.getSource()).stop();
 				}
 			}
 
-			m_x += m_deltaX;
-			m_y += m_deltaY;
 			m_note.setLocation((int) (m_x), (int) (m_y));
 		}
 	}
