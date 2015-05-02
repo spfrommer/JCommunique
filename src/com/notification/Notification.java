@@ -1,18 +1,18 @@
 package com.notification;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class Notification {
 	private List<NotificationListener> m_listeners;
 
 	public Notification() {
-		m_listeners = new ArrayList<NotificationListener>();
+		m_listeners = new CopyOnWriteArrayList<NotificationListener>();
 	}
 
 	/**
 	 * Listens for events on the Notification (e.g., a click).
-	 * 
+	 *
 	 * @param listener
 	 */
 	public void addNotificationListener(NotificationListener listener) {
@@ -21,16 +21,16 @@ public abstract class Notification {
 
 	/**
 	 * Removes a listener for events on the Notification (e.g., a click).
-	 * 
+	 *
 	 * @param listener
 	 */
 	public void removeNotificationListener(NotificationListener listener) {
 		m_listeners.remove(listener);
 	}
 
-	protected void fireListeners() {
+	protected void fireListeners(String action) {
 		for (NotificationListener nl : m_listeners) {
-			nl.actionCompleted(this);
+			nl.actionCompleted(this, action);
 		}
 	}
 

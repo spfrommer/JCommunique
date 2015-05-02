@@ -33,7 +33,7 @@ public abstract class WindowNotification extends Notification {
 		m_listener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				fireListeners();
+				fireListeners("clicked");
 				if (m_closeOnClick)
 					hide();
 			}
@@ -173,11 +173,13 @@ public abstract class WindowNotification extends Notification {
 	@Override
 	public void show() {
 		m_window.setVisible(true);
+		fireListeners("shown");
 	}
 
 	@Override
 	public void hide() {
 		m_window.setVisible(false);
+		fireListeners("hidden");
 	}
 
 	@Override

@@ -14,7 +14,7 @@ import com.utils.IconUtils;
 import com.utils.Time;
 
 /**
- * This is a simple demo which uses the SimpleManager to show two different types of Notifications.
+ * This is a simple demo which uses the SimpleManager to show different types of Notifications.
  */
 public class SimpleManagerDemo {
 	public static void main(String[] args) throws InterruptedException {
@@ -22,7 +22,7 @@ public class SimpleManagerDemo {
 		// this will mean no fading on unix machines (since it doesn't look too good)
 		Platform.instance().setAdjustForPlatform(true);
 
-		// makes a factory with the built-in clean theme
+		// makes a factory with the built-in clean dark theme
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanDark());
 		// a normal manager that just pops up the notification
 		NotificationManager plain = new SimpleManager(Location.NORTHWEST);
