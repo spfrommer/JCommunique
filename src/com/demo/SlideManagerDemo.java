@@ -1,9 +1,9 @@
 package com.demo;
 
-import com.manager.SlideManager;
-import com.manager.SlideManager.SlideDirection;
 import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.Location;
+import com.notification.manager.SlideManager;
+import com.notification.manager.SlideManager.SlideDirection;
 import com.theme.ThemePackagePresets;
 import com.utils.Time;
 

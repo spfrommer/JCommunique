@@ -27,7 +27,7 @@ public class AcceptNotification extends TextNotification {
 		m_accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				superHide();
+				removeFromManager();
 
 				m_accepted = true;
 				synchronized (AcceptNotification.this) {
@@ -38,7 +38,7 @@ public class AcceptNotification extends TextNotification {
 		m_decline.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				superHide();
+				removeFromManager();
 
 				m_accepted = false;
 				synchronized (AcceptNotification.this) {
@@ -111,10 +111,6 @@ public class AcceptNotification extends TextNotification {
 	 */
 	public void setDeclineText(String declineText) {
 		m_decline.setText(declineText);
-	}
-
-	private void superHide() {
-		super.hide();
 	}
 
 	@Override

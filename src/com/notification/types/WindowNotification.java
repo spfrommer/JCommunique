@@ -35,7 +35,7 @@ public abstract class WindowNotification extends Notification {
 			public void mouseClicked(MouseEvent e) {
 				fireListeners("clicked");
 				if (m_closeOnClick)
-					hide();
+					removeFromManager();
 			}
 		};
 

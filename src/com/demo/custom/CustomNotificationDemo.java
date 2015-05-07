@@ -1,9 +1,9 @@
 package com.demo.custom;
 
-import com.manager.NotificationManager;
-import com.manager.SimpleManager;
 import com.notification.NotificationFactory;
+import com.notification.NotificationManager;
 import com.notification.NotificationFactory.Location;
+import com.notification.manager.SimpleManager;
 import com.platform.Platform;
 import com.theme.ThemePackagePresets;
 import com.utils.Time;

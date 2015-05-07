@@ -1,4 +1,4 @@
-package com.manager;
+package com.notification.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

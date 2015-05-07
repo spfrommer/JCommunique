@@ -1,9 +1,9 @@
 package com.demo;
 
-import com.manager.QueueManager;
 import com.notification.Notification;
 import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.Location;
+import com.notification.manager.QueueManager;
 import com.platform.Platform;
 import com.theme.ThemePackagePresets;
 import com.utils.IconUtils;

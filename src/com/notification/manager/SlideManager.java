@@ -1,4 +1,4 @@
-package com.manager;
+package com.notification.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 import com.notification.Notification;
+import com.notification.NotificationManager;
 import com.notification.NotificationFactory.Location;
 import com.utils.Screen;
 import com.utils.Time;

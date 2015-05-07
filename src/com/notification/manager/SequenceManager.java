@@ -1,4 +1,4 @@
-package com.manager;
+package com.notification.manager;
 
 import java.util.ArrayList;
 import java.util.List;

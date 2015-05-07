@@ -1,9 +1,8 @@
-package com.manager;
+package com.notification;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.notification.Notification;
 import com.utils.Time;
 
 /**
@@ -26,6 +25,7 @@ public abstract class NotificationManager {
 	 *            display for one second).
 	 */
 	public final void addNotification(Notification note, Time time) {
+		note.setNotificationManager(this);
 		m_notifications.add(note);
 		notificationAdded(note, time);
 	}
@@ -38,6 +38,7 @@ public abstract class NotificationManager {
 	public final void removeNotification(Notification note) {
 		m_notifications.remove(note);
 		notificationRemoved(note);
+		note.setNotificationManager(null);
 	}
 
 	public final List<Notification> getNotifications() {

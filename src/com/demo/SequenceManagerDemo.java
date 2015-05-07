@@ -1,8 +1,8 @@
 package com.demo;
 
-import com.manager.SequenceManager;
 import com.notification.Notification;
 import com.notification.NotificationFactory;
+import com.notification.manager.SequenceManager;
 import com.notification.types.WindowNotification;
 import com.platform.Platform;
 import com.theme.ThemePackagePresets;

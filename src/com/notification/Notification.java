@@ -3,7 +3,11 @@ package com.notification;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * Provides the core methods that a Notification needs.
+ */
 public abstract class Notification {
+	private NotificationManager m_manager;
 	private List<NotificationListener> m_listeners;
 
 	public Notification() {
@@ -26,6 +30,32 @@ public abstract class Notification {
 	 */
 	public void removeNotificationListener(NotificationListener listener) {
 		m_listeners.remove(listener);
+	}
+
+	/**
+	 * @return whether or not this Notification has been added to a NotificationManager
+	 */
+	public boolean isManaged() {
+		return m_manager != null;
+	}
+
+	/**
+	 * @return the NotificationManager managing this Notification
+	 */
+	public NotificationManager getNotificationManager() {
+		return m_manager;
+	}
+
+	protected void setNotificationManager(NotificationManager manager) {
+		m_manager = manager;
+	}
+
+	/**
+	 * Removes the Notification from the Manager. In most cases, this has the same effect as calling hide(); however,
+	 * hide() doesn't invoke Manager-related things like fading, etc.
+	 */
+	public void removeFromManager() {
+		m_manager.removeNotification(this);
 	}
 
 	protected void fireListeners(String action) {

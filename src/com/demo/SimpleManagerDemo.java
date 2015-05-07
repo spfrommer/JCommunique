@@ -1,14 +1,13 @@
 package com.demo;
 
-import com.manager.NotificationManager;
-import com.manager.SimpleManager;
 import com.notification.NotificationFactory;
 import com.notification.NotificationFactory.Location;
+import com.notification.NotificationManager;
+import com.notification.manager.SimpleManager;
 import com.notification.types.AcceptNotification;
 import com.notification.types.IconNotification;
 import com.notification.types.ProgressBarNotification;
 import com.notification.types.TextNotification;
-import com.platform.Platform;
 import com.theme.ThemePackagePresets;
 import com.utils.IconUtils;
 import com.utils.Time;
@@ -20,7 +19,7 @@ public class SimpleManagerDemo {
 	public static void main(String[] args) throws InterruptedException {
 		// this will make the Notifications match the limits of the platform
 		// this will mean no fading on unix machines (since it doesn't look too good)
-		Platform.instance().setAdjustForPlatform(true);
+		// Platform.instance().setAdjustForPlatform(true);
 
 		// makes a factory with the built-in clean dark theme
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanDark());
