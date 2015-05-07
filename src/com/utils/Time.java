@@ -32,11 +32,19 @@ public final class Time {
 
 	/**
 	 * Specifies that the Notification should display infinitely.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Time infinite() {
 		return new Time(-1, true);
+	}
+
+	/**
+	 * @param time
+	 * @return the sum of the two times
+	 */
+	public Time add(Time time) {
+		return new Time(m_milliseconds + time.getMilliseconds(), m_infinite || time.isInfinite());
 	}
 
 	/**

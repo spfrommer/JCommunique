@@ -8,7 +8,6 @@ import com.notification.types.AcceptNotification;
 import com.notification.types.IconNotification;
 import com.notification.types.ProgressBarNotification;
 import com.notification.types.TextNotification;
-import com.platform.Platform;
 import com.theme.ThemePackagePresets;
 import com.utils.IconUtils;
 import com.utils.Time;
@@ -20,7 +19,7 @@ public class SimpleManagerDemo {
 	public static void main(String[] args) throws InterruptedException {
 		// this will make the Notifications match the limits of the platform
 		// this will mean no fading on unix machines (since it doesn't look too good)
-		Platform.instance().setAdjustForPlatform(true);
+		// Platform.instance().setAdjustForPlatform(true);
 
 		// makes a factory with the built-in clean dark theme
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanDark());
@@ -29,10 +28,10 @@ public class SimpleManagerDemo {
 		// a fade manager that will make the window fade in and out over a two second period
 		SimpleManager fade = new SimpleManager(Location.SOUTHWEST);
 		fade.setFadeEnabled(true);
-		fade.setFadeTime(Time.seconds(1));
+		fade.setFadeTime(Time.seconds(2));
 
 		// adds a text notification to the first manager
-		TextNotification notification = factory.buildTextNotification("This is the dark theme", "Managed by a SimpleManager");
+		TextNotification notification = factory.buildTextNotification("This is the dark theme", "No fade");
 		notification.setCloseOnClick(true);
 		// the notification will stay there forever until you click it to exit
 		plain.addNotification(notification, Time.infinite());
@@ -41,11 +40,11 @@ public class SimpleManagerDemo {
 		// adds an icon notification that should fade in - note that results may vary depending on the platform
 		IconNotification icon = factory.buildIconNotification("This is a really really really long title", "See the cutoff?",
 				IconUtils.createIcon("/com/demo/exclamation.png", 50, 50));
-		new SimpleManager(Location.WEST).addNotification(icon, Time.seconds(2));
+		fade.addNotification(icon, Time.seconds(2));
 
-		Thread.sleep(2000);
-		AcceptNotification accept = factory.buildAcceptNotification("Do you accept?", "This is a test.");
-		fade.addNotification(accept, Time.seconds(4));
+		Thread.sleep(6000);
+		AcceptNotification accept = factory.buildAcceptNotification("Do you accept?", "This is a fading notification.");
+		fade.addNotification(accept, Time.infinite());
 
 		boolean didAccept = accept.blockUntilReply();
 		ProgressBarNotification reply = null;
