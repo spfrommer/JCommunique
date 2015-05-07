@@ -19,7 +19,7 @@ public class SimpleManagerDemo {
 	public static void main(String[] args) throws InterruptedException {
 		// this will make the Notifications match the limits of the platform
 		// this will mean no fading on unix machines (since it doesn't look too good)
-		// Platform.instance().setAdjustForPlatform(true);
+		Platform.instance().setAdjustForPlatform(true);
 
 		// makes a factory with the built-in clean dark theme
 		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanDark());
@@ -60,5 +60,6 @@ public class SimpleManagerDemo {
 			reply.setProgress(i);
 			Thread.sleep(100);
 		}
+		fade.removeNotification(reply);
 	}
 }
