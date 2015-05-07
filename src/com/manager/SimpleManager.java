@@ -23,6 +23,8 @@ public class SimpleManager extends NotificationManager {
 	private boolean m_fadeEnabled = false;
 	private Time m_fadeTime;
 
+	private static final int FADE_DELAY = 100; // milliseconds
+
 	{
 		m_screen = Screen.standard();
 		m_fadeEnabled = false;
@@ -57,6 +59,8 @@ public class SimpleManager extends NotificationManager {
 	 * @return whether or not fading is enabled
 	 */
 	public boolean isFadeEnabled() {
+		syncFadeEnabledWithPlatform();
+
 		return m_fadeEnabled;
 	}
 
@@ -67,6 +71,13 @@ public class SimpleManager extends NotificationManager {
 	 */
 	public void setFadeEnabled(boolean fadeEnabled) {
 		m_fadeEnabled = fadeEnabled;
+
+		syncFadeEnabledWithPlatform();
+	}
+
+	private void syncFadeEnabledWithPlatform() {
+		if (m_fadeEnabled && Platform.instance().isUsed())
+			m_fadeEnabled = Platform.instance().isSupported("fade");
 	}
 
 	/**
@@ -89,71 +100,67 @@ public class SimpleManager extends NotificationManager {
 		return m_screen;
 	}
 
-	private double getDeltaFade(double opacity, double frequency) {
-		double numTimes = m_fadeTime.getMilliseconds() / frequency;
-		double fade = opacity / numTimes;
-		return fade;
-	}
-
 	@Override
 	protected void notificationAdded(Notification note, Time time) {
 		note.setLocation(m_screen.getX(m_loc, note), m_screen.getY(m_loc, note));
 
-		if (Platform.instance().isUsed()) {
-			m_fadeEnabled = Platform.instance().isSupported("fade");
-		}
-
-		if (m_fadeEnabled) {
-			double frequency = 100;
+		if (isFadeEnabled()) {
 			double opacity = note.getOpacity();
-
 			note.setOpacity(0);
-			Timer timer = new Timer((int) frequency, new Fader(note, getDeltaFade(opacity, frequency), opacity));
-			timer.start();
+			startFade(note, opacity);
+			scheduleRemoval(note, time.add(m_fadeTime));
+		} else {
+			scheduleRemoval(note, time);
 		}
 
 		note.show();
+	}
 
+	@Override
+	protected void notificationRemoved(Notification note) {
+		if (isFadeEnabled()) {
+			startFade(note, -note.getOpacity());
+		} else {
+			note.hide();
+		}
+	}
+
+	private void startFade(Notification note, double deltaOpacity) {
+		Timer timer = new Timer(FADE_DELAY, new Fader(note, getDeltaFade(deltaOpacity), deltaOpacity));
+		timer.start();
+	}
+
+	private double getDeltaFade(double deltaOpacity) {
+		double numTimes = m_fadeTime.getMilliseconds() / (double) FADE_DELAY;
+		double fade = deltaOpacity / numTimes;
+		return fade;
+	}
+
+	private void scheduleRemoval(Notification note, Time time) {
 		if (!time.isInfinite()) {
 			java.util.Timer removeTimer = new java.util.Timer();
 			removeTimer.schedule(new RemoveTask(note), time.getMilliseconds());
 		}
 	}
 
-	@Override
-	protected void notificationRemoved(Notification note) {
-		if (Platform.instance().isUsed()) {
-			m_fadeEnabled = Platform.instance().isSupported("fade");
-		}
-
-		if (m_fadeEnabled) {
-			double frequency = 50;
-
-			Timer timer = new Timer((int) frequency, new Fader(note, -getDeltaFade(note.getOpacity(), frequency), 0));
-			timer.start();
-		} else {
-			note.hide();
-		}
-	}
-
 	private class Fader implements ActionListener {
 		private Notification m_note;
-		private double m_fade;
+		private double m_deltaFade;
 		private double m_stopFade;
 
-		public Fader(Notification note, double fade, double stopFade) {
+		public Fader(Notification note, double deltaFade, double stopFade) {
 			m_note = note;
-			m_fade = fade;
+			m_deltaFade = deltaFade;
 			m_stopFade = stopFade;
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if ((m_fade > 0) ? m_note.getOpacity() < m_stopFade : m_note.getOpacity() > m_stopFade) {
-				m_note.setOpacity(m_note.getOpacity() + m_fade);
+			if ((m_deltaFade > 0) ? m_note.getOpacity() < m_stopFade : m_note.getOpacity() > m_stopFade) {
+				m_note.setOpacity(m_note.getOpacity() + m_deltaFade);
 			} else {
 				((Timer) e.getSource()).stop();
-				if (m_fade < 0) {
+				if (m_deltaFade < 0) {
 					m_note.hide();
 				}
 			}
