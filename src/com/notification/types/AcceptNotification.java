@@ -1,7 +1,6 @@
 package com.notification.types;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import com.theme.TextTheme;
 import com.theme.WindowTheme;
 
 /**
@@ -128,12 +128,20 @@ public class AcceptNotification extends TextNotification {
 	}
 
 	@Override
+	public void setTextTheme(TextTheme theme) {
+		super.setTextTheme(theme);
+
+		m_accept.setForeground(theme.subtitleColor);
+		m_decline.setForeground(theme.subtitleColor);
+	}
+
+	@Override
 	public void setWindowTheme(WindowTheme theme) {
 		super.setWindowTheme(theme);
 
-		// override any color setting done automatically by the WindowTheme
-		// since black is the only color that looks good on buttons
-		m_accept.setForeground(Color.black);
-		m_decline.setForeground(Color.black);
+		if (getTextTheme() != null) {
+			m_accept.setForeground(getTextTheme().subtitleColor);
+			m_decline.setForeground(getTextTheme().subtitleColor);
+		}
 	}
 }
