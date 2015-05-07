@@ -1,5 +1,8 @@
 package com.platform;
 
+/**
+ * Detects platform-specific modifications.
+ */
 public class Platform {
 	private OperatingSystem m_operatingSystem;
 	private boolean m_used = false;
@@ -39,7 +42,7 @@ public class Platform {
 
 	/**
 	 * Sets whether or not the Notifications should be adjusted to best fit the platform.
-	 * 
+	 *
 	 * @param used
 	 */
 	public void setAdjustForPlatform(boolean used) {
