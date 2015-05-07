@@ -5,8 +5,6 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 
-import javax.swing.UIManager;
-
 import com.notification.Notification;
 import com.notification.NotificationFactory.Location;
 
@@ -23,14 +21,6 @@ public class Screen {
 	private int m_bottomY;
 
 	private int m_padding;
-
-	static {
-		try {
-			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	private Screen(boolean spanMultipleMonitors, int padding) {
 		m_padding = padding;
