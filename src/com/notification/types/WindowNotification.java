@@ -25,6 +25,9 @@ public abstract class WindowNotification extends Notification {
 
 	private static final int DEFAULT_WIDTH = 300;
 	private static final int DEFAULT_HEIGHT = 100;
+	public static final String CLICKED = "clicked";
+	public static final String SHOWN = "shown";
+	public static final String HIDDEN = "hidden";
 
 	public WindowNotification() {
 		m_window = new JWindow();
@@ -33,7 +36,7 @@ public abstract class WindowNotification extends Notification {
 		m_listener = new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				fireListeners("clicked");
+				fireListeners(CLICKED);
 				if (m_closeOnClick)
 					removeFromManager();
 			}
@@ -173,13 +176,13 @@ public abstract class WindowNotification extends Notification {
 	@Override
 	public void show() {
 		m_window.setVisible(true);
-		fireListeners("shown");
+		fireListeners(SHOWN);
 	}
 
 	@Override
 	public void hide() {
 		m_window.setVisible(false);
-		fireListeners("hidden");
+		fireListeners(HIDDEN);
 	}
 
 	@Override

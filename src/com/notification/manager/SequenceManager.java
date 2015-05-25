@@ -6,6 +6,7 @@ import java.util.List;
 import com.notification.Notification;
 import com.notification.NotificationFactory.Location;
 import com.notification.NotificationListener;
+import com.notification.types.WindowNotification;
 import com.utils.Time;
 
 /**
@@ -46,7 +47,7 @@ public class SequenceManager extends SimpleManager {
 	private class CloseListener implements NotificationListener {
 		@Override
 		public void actionCompleted(Notification notification, String action) {
-			if (action.equals("hidden")) {
+			if (action.equals(WindowNotification.HIDDEN)) {
 				m_currentNotification.removeNotificationListener(this);
 				m_currentNotification = null;
 				if (!m_sequence.isEmpty()) {

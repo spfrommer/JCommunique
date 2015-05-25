@@ -1,7 +1,7 @@
 package com.utils;
 
 /**
- * Represents the time the Notification should be shown.
+ * Represents a time, which can be used for the duration of a Notification, fade times, etc.
  */
 public final class Time {
 	private int m_milliseconds;
@@ -14,7 +14,7 @@ public final class Time {
 
 	/**
 	 * @param seconds
-	 *            the number of seconds the Notification should display. This is truncated at the millisecond.
+	 *            the number of seconds. This is truncated at the millisecond.
 	 * @return
 	 */
 	public static Time seconds(double seconds) {
@@ -23,7 +23,7 @@ public final class Time {
 
 	/**
 	 * @param milliseconds
-	 *            the number of milliseconds the Notification should display.
+	 *            the number of milliseconds
 	 * @return
 	 */
 	public static Time milliseconds(int milliseconds) {
@@ -31,7 +31,7 @@ public final class Time {
 	}
 
 	/**
-	 * Specifies that the Notification should display infinitely.
+	 * Specifies an infinite length of Time.
 	 *
 	 * @return
 	 */
@@ -48,7 +48,7 @@ public final class Time {
 	}
 
 	/**
-	 * @return the number of seconds that the Notification displays, of -1 if it is infinite
+	 * @return the number of seconds, of -1 if it is infinite
 	 */
 	public double getSeconds() {
 		if (m_infinite)
@@ -57,7 +57,7 @@ public final class Time {
 	}
 
 	/**
-	 * @return the number of milliseconds that the Notification displays, or -1 if it is infinite
+	 * @return the number of milliseconds, or -1 if it is infinite
 	 */
 	public int getMilliseconds() {
 		if (m_infinite)
@@ -66,7 +66,7 @@ public final class Time {
 	}
 
 	/**
-	 * @return whether or not the Notification is infinite
+	 * @return whether or not the Time is infinite
 	 */
 	public boolean isInfinite() {
 		return m_infinite;
