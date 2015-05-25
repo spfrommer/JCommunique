@@ -50,4 +50,26 @@ public class ThemePackagePresets {
 
 		return pack;
 	}
+
+	public static ThemePackage aqua() {
+		ThemePackage pack = new ThemePackage();
+
+		WindowTheme window = new WindowTheme();
+		window.background = new Color(0, 191, 255);
+		window.foreground = new Color(0, 30, 255);
+		window.opacity = 0.5f;
+		window.width = 300;
+		window.height = 100;
+
+		TextTheme text = new TextTheme();
+		text.title = new Font("Comic Sans MS", Font.BOLD, 22);
+		text.subtitle = new Font("Comic Sans MS", Font.PLAIN, 16);
+		text.titleColor = new Color(10, 10, 10);
+		text.subtitleColor = new Color(10, 10, 10);
+
+		pack.windowTheme = window;
+		pack.textTheme = text;
+
+		return pack;
+	}
 }

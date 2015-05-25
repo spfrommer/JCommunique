@@ -19,7 +19,7 @@ public class SequenceManagerDemo {
 		Platform.instance().setAdjustForPlatform(true);
 
 		// makes a factory with the built-in clean light theme
-		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.cleanLight());
+		NotificationFactory factory = new NotificationFactory(ThemePackagePresets.aqua());
 		SequenceManager sequence = new SequenceManager();
 		// makes the notifications fade in and out
 		sequence.setFadeEnabled(true);
@@ -29,7 +29,7 @@ public class SequenceManagerDemo {
 		WindowNotification note2 = factory.buildIconNotification("You must click this!", "To make it go away.",
 				IconUtils.createIcon("/com/demo/exclamation.png", 50, 50));
 		note2.setCloseOnClick(true);
-		Notification note3 = factory.buildAcceptNotification("Test3", "test3");
+		Notification note3 = factory.buildAcceptNotification("Test 3", "This will show for three seconds");
 
 		// adds the Notifications in the order that they should be shown in
 		// the next Notification will not appear until the previous has become hidden
