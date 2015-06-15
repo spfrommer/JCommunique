@@ -2,12 +2,13 @@ package com.notification.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 
 import javax.swing.Timer;
 
 import com.notification.Notification;
-import com.notification.NotificationManager;
 import com.notification.NotificationFactory.Location;
+import com.notification.NotificationManager;
 import com.utils.Screen;
 import com.utils.Time;
 
@@ -18,6 +19,7 @@ public class SlideManager extends NotificationManager {
 	private Location m_loc;
 	private Screen m_standardScreen;
 	private Screen m_noPaddingScreen;
+	HashMap<SlideDirection, Slider> m_sliders;
 	private SlideDirection m_direction;
 	private double m_slideSpeed;
 	private boolean m_overwrite;
@@ -27,6 +29,11 @@ public class SlideManager extends NotificationManager {
 	}
 
 	{
+		m_sliders = new HashMap<SlideDirection, Slider>();
+		m_sliders.put(SlideDirection.NORTH, new NorthSlider());
+		m_sliders.put(SlideDirection.SOUTH, new SouthSlider());
+		m_sliders.put(SlideDirection.EAST, new EastSlider());
+		m_sliders.put(SlideDirection.WEST, new WestSlider());
 		m_standardScreen = Screen.standard();
 		m_noPaddingScreen = Screen.withPadding(0);
 		m_slideSpeed = 300;
@@ -101,11 +108,7 @@ public class SlideManager extends NotificationManager {
 	private void recalculateSlideDirection() {
 		switch (m_loc) {
 		case NORTHWEST:
-			m_direction = SlideDirection.SOUTH;
-			break;
 		case NORTH:
-			m_direction = SlideDirection.SOUTH;
-			break;
 		case NORTHEAST:
 			m_direction = SlideDirection.SOUTH;
 			break;
@@ -113,11 +116,7 @@ public class SlideManager extends NotificationManager {
 			m_direction = SlideDirection.WEST;
 			break;
 		case SOUTHEAST:
-			m_direction = SlideDirection.NORTH;
-			break;
 		case SOUTH:
-			m_direction = SlideDirection.NORTH;
-			break;
 		case SOUTHWEST:
 			m_direction = SlideDirection.NORTH;
 			break;
@@ -129,39 +128,10 @@ public class SlideManager extends NotificationManager {
 
 	@Override
 	protected void notificationAdded(Notification note, Time time) {
-		int noPaddingX = m_noPaddingScreen.getX(m_loc, note);
-		int noPaddingY = m_noPaddingScreen.getY(m_loc, note);
-		int standardX = m_standardScreen.getX(m_loc, note);
-		int standardY = m_standardScreen.getY(m_loc, note);
-
-		Slider slider = null;
-		double frequency = 50;
-		double slideDelta = m_slideSpeed / frequency;
-
-		switch (m_direction) {
-		case NORTH: {
-			note.setLocation(standardX, noPaddingY);
-			slider = new Slider(note, m_direction, 0, -slideDelta, standardX, standardY);
-		}
-			break;
-		case SOUTH: {
-			note.setLocation(standardX, noPaddingY);
-			slider = new Slider(note, m_direction, 0, slideDelta, standardX, standardY);
-		}
-			break;
-		case EAST: {
-			note.setLocation(noPaddingX, standardY);
-			slider = new Slider(note, m_direction, slideDelta, 0, standardX, standardY);
-		}
-			break;
-		case WEST:
-			note.setLocation(noPaddingX, standardY);
-			slider = new Slider(note, m_direction, -slideDelta, 0, standardX, standardY);
-			break;
-		}
-
-		Timer timer = new Timer((int) frequency, slider);
-		timer.start();
+		double delay = 50;
+		double slideDelta = m_slideSpeed / delay;
+		m_sliders.get(m_direction).setInitialPosition(note);
+		m_sliders.get(m_direction).animate(note, delay, slideDelta);
 		note.show();
 	}
 
@@ -170,57 +140,104 @@ public class SlideManager extends NotificationManager {
 
 	}
 
-	public class Slider implements ActionListener {
-		private Notification m_note;
-		private SlideDirection m_dir;
-		private double m_deltaX;
-		private double m_deltaY;
-		private double m_stopX;
-		private double m_stopY;
+	private abstract class Slider implements ActionListener {
+		protected Notification m_note;
+		protected double m_delta;
+		protected double m_stopX;
+		protected double m_stopY;
 
-		private double m_x;
-		private double m_y;
+		protected double m_x;
+		protected double m_y;
 
-		public Slider(Notification note, SlideDirection dir, double deltaX, double deltaY, double stopX, double stopY) {
+		public void animate(Notification note, double delay, double slideDelta) {
 			m_note = note;
-			m_dir = dir;
-			m_deltaX = deltaX;
-			m_deltaY = deltaY;
-			m_stopX = stopX;
-			m_stopY = stopY;
-
 			m_x = note.getX();
 			m_y = note.getY();
+			m_delta = Math.abs(slideDelta);
+			m_stopX = m_standardScreen.getX(m_loc, note);
+			m_stopY = m_standardScreen.getY(m_loc, note);
+
+			Timer timer = new Timer((int) delay, this);
+			timer.start();
 		}
 
+		public abstract void setInitialPosition(Notification note);
+	}
+
+	private class NorthSlider extends Slider {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			m_x += m_deltaX;
-			m_y += m_deltaY;
+			m_y -= m_delta;
 
-			if (m_dir == SlideDirection.SOUTH) {
-				if (m_y >= m_stopY) {
-					m_y = m_stopY;
-					((Timer) e.getSource()).stop();
-				}
-			} else if (m_dir == SlideDirection.NORTH) {
-				if (m_y <= m_stopY) {
-					m_y = m_stopY;
-					((Timer) e.getSource()).stop();
-				}
-			} else if (m_dir == SlideDirection.EAST) {
-				if (m_x >= m_stopX) {
-					m_x = m_stopX;
-					((Timer) e.getSource()).stop();
-				}
-			} else if (m_dir == SlideDirection.WEST) {
-				if (m_x <= m_stopX) {
-					m_x = m_stopX;
-					((Timer) e.getSource()).stop();
-				}
+			if (m_y <= m_stopY) {
+				m_y = m_stopY;
+				((Timer) e.getSource()).stop();
 			}
 
 			m_note.setLocation((int) (m_x), (int) (m_y));
 		}
+
+		@Override
+		public void setInitialPosition(Notification note) {
+			note.setLocation(m_standardScreen.getX(m_loc, note), m_noPaddingScreen.getY(m_loc, note));
+		}
 	}
+
+	private class SouthSlider extends Slider {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			m_y += m_delta;
+
+			if (m_y >= m_stopY) {
+				m_y = m_stopY;
+				((Timer) e.getSource()).stop();
+			}
+
+			m_note.setLocation((int) (m_x), (int) (m_y));
+		}
+
+		@Override
+		public void setInitialPosition(Notification note) {
+			note.setLocation(m_standardScreen.getX(m_loc, note), m_noPaddingScreen.getY(m_loc, note));
+		}
+	}
+
+	private class EastSlider extends Slider {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			m_x += m_delta;
+
+			if (m_x >= m_stopX) {
+				m_x = m_stopX;
+				((Timer) e.getSource()).stop();
+			}
+
+			m_note.setLocation((int) (m_x), (int) (m_y));
+		}
+
+		@Override
+		public void setInitialPosition(Notification note) {
+			note.setLocation(m_noPaddingScreen.getX(m_loc, note), m_standardScreen.getY(m_loc, note));
+		}
+	}
+
+	private class WestSlider extends Slider {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			m_x -= m_delta;
+
+			if (m_x <= m_stopX) {
+				m_x = m_stopX;
+				((Timer) e.getSource()).stop();
+			}
+
+			m_note.setLocation((int) (m_x), (int) (m_y));
+		}
+
+		@Override
+		public void setInitialPosition(Notification note) {
+			note.setLocation(m_noPaddingScreen.getX(m_loc, note), m_standardScreen.getY(m_loc, note));
+		}
+	}
+
 }
