@@ -23,10 +23,6 @@ sourceSets {
     }
 }
 
-clean {
-    delete "**/*.java~" 
-}
-
 test {
      testLogging {
      	  exceptionFormat = 'full'     	 
