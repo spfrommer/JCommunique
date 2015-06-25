@@ -1,0 +1,49 @@
+apply plugin: 'java'
+sourceCompatibility = 1.7
+version = '2.0.0'
+
+repositories {
+    jcenter()
+}
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/java' // where the main code is
+        }
+    }
+
+    test {
+        java {
+            srcDir 'src/test/java' // tests for all the main code
+        }
+    }
+}
+
+clean {
+    delete "**/*.java~" 
+}
+
+test {
+     testLogging {
+     	  exceptionFormat = 'full'     	 
+     }
+}
+
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Quickstart',
+		'Implementation-Version': version
+    }
+}
+
+uploadArchives {
+    repositories {
+       flatDir {
+           dirs 'repos'
+       }
+    }
+}
