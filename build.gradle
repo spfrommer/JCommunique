@@ -12,13 +12,16 @@ dependencies {
 sourceSets {
     main {
         java {
-            srcDirs 'src/main/java' // where the main code is
+            srcDir 'src/main/java'
         }
+	resources {
+    	    srcDir 'src/main/resources'
+	}
     }
 
     test {
         java {
-            srcDir 'src/test/java' // tests for all the main code
+            srcDir 'src/test/java'
         }
     }
 }
@@ -43,3 +46,6 @@ uploadArchives {
        }
     }
 }
+
+task rebuild(dependsOn: ['clean', 'build'])
+build.mustRunAfter clean

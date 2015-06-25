@@ -11,8 +11,8 @@ import com.theme.WindowTheme;
  * A text notification which will display a title and a subtitle.
  */
 public class TextNotification extends BorderLayoutNotification {
-	private JLabel m_titleLabel;
-	private JLabel m_subtitleLabel;
+	protected JLabel m_titleLabel;
+	protected JLabel m_subtitleLabel;
 
 	private TextTheme m_textTheme;
 
