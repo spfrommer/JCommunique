@@ -144,11 +144,7 @@ public final class NotificationFactory {
 	 * @return
 	 */
 	public AcceptNotification buildAcceptNotification(String title, String subtitle, String acceptText, String declineText) {
-		AcceptNotification accept = new AcceptNotification();
-		accept.setWindowTheme(m_pack.windowTheme);
-		accept.setTextTheme(m_pack.textTheme);
-		accept.setTitle(title);
-		accept.setSubtitle(subtitle);
+		AcceptNotification accept = buildAcceptNotification(title, subtitle);
 		accept.setAcceptText(acceptText);
 		accept.setDeclineText(declineText);
 
