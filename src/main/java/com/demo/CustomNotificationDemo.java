@@ -1,4 +1,4 @@
-package com.demo.custom;
+package com.demo;
 
 import com.notification.NotificationFactory;
 import com.notification.NotificationManager;
