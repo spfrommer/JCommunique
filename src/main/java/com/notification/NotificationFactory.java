@@ -10,8 +10,10 @@ import com.notification.types.AcceptNotification;
 import com.notification.types.IconNotification;
 import com.notification.types.ProgressBarNotification;
 import com.notification.types.TextNotification;
+import com.theme.TextTheme;
 import com.theme.ThemePackage;
 import com.theme.ThemePackagePresets;
+import com.theme.WindowTheme;
 
 /**
  * Creates Notifications using a ThemePackage. It is possible to add custom Notifications by adding
@@ -168,8 +170,8 @@ public final class NotificationFactory {
 				throw new NotificationException("TextNotifications need two arguments: title, subtitle!");
 
 			TextNotification note = new TextNotification();
-			note.setWindowTheme(pack.windowTheme);
-			note.setTextTheme(pack.textTheme);
+			note.setWindowTheme(pack.getTheme(WindowTheme.class));
+			note.setTextTheme(pack.getTheme(TextTheme.class));
 			note.setTitle((String) args[0]);
 			note.setSubtitle((String) args[1]);
 			return note;
@@ -184,8 +186,8 @@ public final class NotificationFactory {
 						"AcceptNotifications need two or four arguments: title, subtitle, accept text, decline text!");
 
 			AcceptNotification note = new AcceptNotification();
-			note.setWindowTheme(pack.windowTheme);
-			note.setTextTheme(pack.textTheme);
+			note.setWindowTheme(pack.getTheme(WindowTheme.class));
+			note.setTextTheme(pack.getTheme(TextTheme.class));
 			note.setTitle((String) args[0]);
 			note.setSubtitle((String) args[1]);
 			if (args.length == 4) {
@@ -204,8 +206,8 @@ public final class NotificationFactory {
 				throw new NotificationException("IconNotifications need three arguments: title, subtitle, icon!");
 
 			IconNotification note = new IconNotification();
-			note.setWindowTheme(pack.windowTheme);
-			note.setTextTheme(pack.textTheme);
+			note.setWindowTheme(pack.getTheme(WindowTheme.class));
+			note.setTextTheme(pack.getTheme(TextTheme.class));
 			note.setTitle((String) args[0]);
 			note.setSubtitle((String) args[1]);
 			note.setIcon((Icon) args[2]);
@@ -220,8 +222,8 @@ public final class NotificationFactory {
 				throw new NotificationException("ProgressBarNotifications need one argument: title!");
 
 			ProgressBarNotification note = new ProgressBarNotification();
-			note.setWindowTheme(pack.windowTheme);
-			note.setTextTheme(pack.textTheme);
+			note.setWindowTheme(pack.getTheme(WindowTheme.class));
+			note.setTextTheme(pack.getTheme(TextTheme.class));
 			note.setTitle((String) args[0]);
 			return note;
 		}

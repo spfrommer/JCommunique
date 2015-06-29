@@ -71,7 +71,7 @@ public abstract class WindowNotification extends Notification {
 
 	/**
 	 * @param close
-
+	 * 
 	 *            whether or not the Notification should close when it's clicked
 	 */
 	public void setCloseOnClick(boolean close) {

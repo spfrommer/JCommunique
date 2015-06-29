@@ -23,8 +23,8 @@ public class ThemePackagePresets {
 		text.titleColor = new Color(10, 10, 10);
 		text.subtitleColor = new Color(10, 10, 10);
 
-		pack.windowTheme = window;
-		pack.textTheme = text;
+		pack.setTheme(WindowTheme.class, window);
+		pack.setTheme(TextTheme.class, text);
 
 		return pack;
 	}
@@ -45,8 +45,8 @@ public class ThemePackagePresets {
 		text.titleColor = new Color(200, 200, 200);
 		text.subtitleColor = new Color(200, 200, 200);
 
-		pack.windowTheme = window;
-		pack.textTheme = text;
+		pack.setTheme(WindowTheme.class, window);
+		pack.setTheme(TextTheme.class, text);
 
 		return pack;
 	}
@@ -67,8 +67,8 @@ public class ThemePackagePresets {
 		text.titleColor = new Color(10, 10, 10);
 		text.subtitleColor = new Color(10, 10, 10);
 
-		pack.windowTheme = window;
-		pack.textTheme = text;
+		pack.setTheme(WindowTheme.class, window);
+		pack.setTheme(TextTheme.class, text);
 
 		return pack;
 	}

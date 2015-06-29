@@ -63,7 +63,7 @@ public class CustomNotification extends BorderLayoutNotification {
 	 *
 	 * @param theme
 	 */
-	public void setTextTeme(TextTheme theme) {
+	public void setTextTheme(TextTheme theme) {
 		m_label.setFont(theme.title);
 		m_label.setForeground(theme.titleColor);
 		m_button.setFont(theme.subtitle);
@@ -95,17 +95,18 @@ public class CustomNotification extends BorderLayoutNotification {
 	public static class CustomBuilder implements NotificationBuilder<CustomNotification> {
 		@Override
 		public CustomNotification buildNotification(ThemePackage pack, Object... args) {
-			CustomNotification notification = new CustomNotification();
-			// handled by WindowNotification
-			notification.setWindowTheme(pack.windowTheme);
+			CustomNotification note = new CustomNotification();
+			// handled by the WindowNotification first, then we override the values we want to keep
+			note.setWindowTheme(pack.getTheme(WindowTheme.class));
 			// handled by us
-			notification.setTextTeme(pack.textTheme);
+			note.setTextTheme(pack.getTheme(TextTheme.class));
+
 			if (args.length > 0) {
-				notification.setText((String) args[0]);
+				note.setText((String) args[0]);
 			} else {
-				notification.setText("No text supplied");
+				note.setText("No text supplied");
 			}
-			return notification;
+			return note;
 		}
 	}
 }

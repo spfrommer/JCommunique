@@ -11,12 +11,14 @@ public class ProgressBarNotificationTest {
 		ProgressBarNotification note = new ProgressBarNotification();
 		assertEquals("ProgressBarNotification should start with 0 progress", 0, note.getProgress());
 	}
+
 	@Test
 	public void progressBarShouldNotExceed100() {
 		ProgressBarNotification note = new ProgressBarNotification();
 		note.setProgress(123);
 		assertEquals("ProgressBarNotification should not exceed 100 progress", 100, note.getProgress());
 	}
+
 	@Test
 	public void progressBarShouldNotGoBelow0() {
 		ProgressBarNotification note = new ProgressBarNotification();
