@@ -77,10 +77,10 @@ public class SlideManager extends NotificationManager {
 	}
 
 	/**
-	 * Sets the direction that the Notification should slide in from.
+	 * Sets the direction that the Notification should slide to.
 	 *
 	 * @param slide
-	 *            the direction that Notifications should slide
+	 *            the direction that Notifications should slide to
 	 */
 	public void setSlideDirection(SlideDirection slide) {
 		m_direction = slide;
