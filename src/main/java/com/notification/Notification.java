@@ -18,6 +18,7 @@ public abstract class Notification {
 	 * Listens for events on the Notification (e.g., a click).
 	 *
 	 * @param listener
+	 *            the NotificationListener to add
 	 */
 	public void addNotificationListener(NotificationListener listener) {
 		m_listeners.add(listener);
@@ -27,6 +28,7 @@ public abstract class Notification {
 	 * Removes a listener for events on the Notification (e.g., a click).
 	 *
 	 * @param listener
+	 *            the NotificationListener to remove
 	 */
 	public void removeNotificationListener(NotificationListener listener) {
 		m_listeners.remove(listener);

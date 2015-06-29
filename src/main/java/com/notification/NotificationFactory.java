@@ -48,6 +48,7 @@ public final class NotificationFactory {
 	 * themes.
 	 *
 	 * @param pack
+	 *            the ThemePackage to set
 	 */
 	public void setThemePackage(ThemePackage pack) {
 		m_pack = pack;
@@ -56,8 +57,12 @@ public final class NotificationFactory {
 	/**
 	 * Adds a custom NotificationBuilder. Notifications can then be built using build(Class notificationClass).
 	 *
+	 * @param <T>
+	 *            the type of Notification of the NotificationBuilder
 	 * @param notificationClass
+	 *            the Class of the Notification that should be built
 	 * @param builder
+	 *            the NotificationBuilder that builds the notificationClass
 	 */
 	public <T extends Notification> void addBuilder(Class<T> notificationClass, NotificationBuilder<T> builder) {
 		m_builders.put(notificationClass, builder);
@@ -66,7 +71,10 @@ public final class NotificationFactory {
 	/**
 	 * Removes the NotificationBuilder associated with this notification class.
 	 *
+	 * @param <T>
+	 *            the type of Notification of the NotificationBuilder
 	 * @param notificationClass
+	 *            the Class of the Notification built by the NotificationBuilder that should be removed
 	 */
 	public <T extends Notification> void removeBuilder(Class<T> notificationClass) {
 		m_builders.remove(notificationClass);
@@ -75,8 +83,11 @@ public final class NotificationFactory {
 	/**
 	 * Builds a Notification using the NotificationBuilder associated with the notification class.
 	 *
+	 * @param <T>
+	 *            the type of Notification of the NotificationBuilder
 	 * @param notificationClass
-	 * @return
+	 *            the Class of the Notification to build
+	 * @return the built Notification
 	 */
 	public <T extends Notification> T build(Class<T> notificationClass) {
 		if (!m_builders.containsKey(notificationClass))
@@ -90,10 +101,13 @@ public final class NotificationFactory {
 	/**
 	 * Builds a Notification using the NotificationBuilder associated with the notification class.
 	 *
+	 * @param <T>
+	 *            the type of Notification of the NotificationBuilder
 	 * @param notificationClass
+	 *            the class of the Notification to build
 	 * @param args
 	 *            the args passed to the NotificationBuilder
-	 * @return
+	 * @return the built Notification
 	 */
 	public <T extends Notification> T build(Class<T> notificationClass, Object... args) {
 		if (!m_builders.containsKey(notificationClass))
@@ -105,11 +119,13 @@ public final class NotificationFactory {
 	}
 
 	/**
-	 * Builds a SimpleTextNotification.
+	 * Builds a TextNotification.
 	 *
 	 * @param title
+	 *            the title to display on the TextNotification
 	 * @param subtitle
-	 * @return
+	 *            the subtitle to display on the TextNotification
+	 * @return the built TextNotification
 	 */
 	public TextNotification buildTextNotification(String title, String subtitle) {
 		return build(TextNotification.class, title, subtitle);
@@ -119,8 +135,10 @@ public final class NotificationFactory {
 	 * Builds an AcceptNotification with "Accept" and "Decline" as the button messages.
 	 *
 	 * @param title
+	 *            the title to display on the AcceptNotification
 	 * @param subtitle
-	 * @return
+	 *            the subtitle to display on the AcceptNotification
+	 * @return the built AcceptNotification
 	 */
 	public AcceptNotification buildAcceptNotification(String title, String subtitle) {
 		return build(AcceptNotification.class, title, subtitle);
@@ -130,12 +148,14 @@ public final class NotificationFactory {
 	 * Builds an AcceptNotification with the specified Strings.
 	 *
 	 * @param title
+	 *            the title to display on the AcceptNotification
 	 * @param subtitle
+	 *            the subtitle to display on the AcceptNotification
 	 * @param accept
 	 *            the text on the accept button
 	 * @param decline
 	 *            the text on the decline button
-	 * @return
+	 * @return the built AcceptNotification
 	 */
 	public AcceptNotification buildAcceptNotification(String title, String subtitle, String accept, String decline) {
 		return build(AcceptNotification.class, title, subtitle, accept, decline);
@@ -145,9 +165,12 @@ public final class NotificationFactory {
 	 * Builds an IconNotification.
 	 *
 	 * @param title
+	 *            the title to display on the IconNotification
 	 * @param subtitle
+	 *            the subtitle to display on the IconNotification
 	 * @param icon
-	 * @return
+	 *            the icon on the IconNotification
+	 * @return the built IconNotification
 	 */
 	public IconNotification buildIconNotification(String title, String subtitle, ImageIcon icon) {
 		return build(IconNotification.class, title, subtitle, icon);
@@ -157,7 +180,8 @@ public final class NotificationFactory {
 	 * Builds a ProgressBarNotification.
 	 *
 	 * @param title
-	 * @return
+	 *            the title to display on the ProgressBarNotification
+	 * @return the built ProgressBarNotification
 	 */
 	public ProgressBarNotification buildProgressBarNotification(String title) {
 		return build(ProgressBarNotification.class, title);

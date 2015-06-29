@@ -35,6 +35,7 @@ public class IconNotification extends TextNotification {
 	 * Sets the icon to use.
 	 *
 	 * @param icon
+	 *            the icon to use
 	 */
 	public void setIcon(Icon icon) {
 		m_iconLabel.setIcon(icon);

@@ -62,6 +62,7 @@ public class CustomNotification extends BorderLayoutNotification {
 	 * This will set the title and subtitle font and color.
 	 *
 	 * @param theme
+	 *            the TextTheme to set
 	 */
 	public void setTextTheme(TextTheme theme) {
 		m_label.setFont(theme.title);

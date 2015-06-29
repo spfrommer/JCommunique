@@ -13,7 +13,9 @@ public interface NotificationBuilder<T extends Notification> {
 	 * Builds a Notification in accordance with the ThemePackage.
 	 *
 	 * @param pack
+	 *            the ThemePackage to apply to the Notification
 	 * @param args
+	 *            optional additional arguments passed to the NotificationBuilder
 	 * @return the built Notification
 	 */
 	public T buildNotification(ThemePackage pack, Object... args);

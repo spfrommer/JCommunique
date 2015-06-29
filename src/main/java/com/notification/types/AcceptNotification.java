@@ -75,6 +75,7 @@ public class AcceptNotification extends TextNotification {
 	 * Sets the preferred size of the buttons.
 	 *
 	 * @param d
+	 *            sets the dimensions of the accept and decline buttons
 	 */
 	public void setButtonDimensions(Dimension d) {
 		m_accept.setPreferredSize(d);
@@ -92,6 +93,7 @@ public class AcceptNotification extends TextNotification {
 	 * Sets the text on the accept button.
 	 *
 	 * @param acceptText
+	 *            the text on the accept button
 	 */
 	public void setAcceptText(String acceptText) {
 		m_accept.setText(acceptText);
@@ -108,6 +110,7 @@ public class AcceptNotification extends TextNotification {
 	 * Sets the text on the decline button.
 	 *
 	 * @param declineText
+	 *            the text on the decline button
 	 */
 	public void setDeclineText(String declineText) {
 		m_decline.setText(declineText);

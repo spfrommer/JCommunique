@@ -15,7 +15,7 @@ public final class Time {
 	/**
 	 * @param seconds
 	 *            the number of seconds. This is truncated at the millisecond.
-	 * @return
+	 * @return a Time of length seconds
 	 */
 	public static Time seconds(double seconds) {
 		return new Time((int) (seconds * 1000), false);
@@ -24,7 +24,7 @@ public final class Time {
 	/**
 	 * @param milliseconds
 	 *            the number of milliseconds
-	 * @return
+	 * @return a Time of length milliseconds
 	 */
 	public static Time milliseconds(int milliseconds) {
 		return new Time(milliseconds, false);
@@ -33,7 +33,7 @@ public final class Time {
 	/**
 	 * Specifies an infinite length of Time.
 	 *
-	 * @return
+	 * @return a Time representing infinity
 	 */
 	public static Time infinite() {
 		return new Time(-1, true);
@@ -41,6 +41,7 @@ public final class Time {
 
 	/**
 	 * @param time
+	 *            the Time to add to
 	 * @return the sum of the two times
 	 */
 	public Time add(Time time) {

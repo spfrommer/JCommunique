@@ -46,8 +46,10 @@ public class QueueManager extends SimpleManager {
 
 	/**
 	 * Sets the vertical padding between Notifications in the queue.
-	 * 
+	 *
 	 * @param verticalPadding
+	 *            the padding that should be maintained between the bottom of the top Notification and the top of the
+	 *            bottom Notification, in pixels
 	 */
 	public void setVerticalPadding(int verticalPadding) {
 		m_verticalPadding = verticalPadding;
@@ -62,8 +64,9 @@ public class QueueManager extends SimpleManager {
 
 	/**
 	 * Sets the direction in which old Notifications will scroll after new ones have been added.
-	 * 
+	 *
 	 * @param dir
+	 *            the direction to scroll in
 	 */
 	public void setScrollDirection(ScrollDirection dir) {
 		m_scroll = dir;

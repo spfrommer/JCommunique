@@ -29,6 +29,7 @@ public class ProgressBarNotification extends BorderLayoutNotification {
 	 * This will set the text font to that of the title font.
 	 *
 	 * @param theme
+	 *            the TextTheme to set
 	 */
 	public void setTextTheme(TextTheme theme) {
 		m_label.setFont(theme.title);
@@ -47,6 +48,7 @@ public class ProgressBarNotification extends BorderLayoutNotification {
 	 * Sest the progress of the progress bar, from 0 to 100.
 	 *
 	 * @param progress
+	 *            the progress to set
 	 */
 	public void setProgress(int progress) {
 		m_progress.setValue(progress);

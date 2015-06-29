@@ -61,6 +61,7 @@ public class SlideManager extends NotificationManager {
 	 * Sets the location where the Notifications show up.
 	 *
 	 * @param loc
+	 *            the Location to show at
 	 */
 	public void setLocation(Location loc) {
 		m_loc = loc;
@@ -79,6 +80,7 @@ public class SlideManager extends NotificationManager {
 	 * Sets the direction that the Notification should slide in from.
 	 *
 	 * @param slide
+	 *            the direction that Notifications should slide
 	 */
 	public void setSlideDirection(SlideDirection slide) {
 		m_direction = slide;
@@ -96,6 +98,7 @@ public class SlideManager extends NotificationManager {
 	 * Sets how fast the Notification should slide in pixels / second.
 	 *
 	 * @param slideSpeed
+	 *            the speed of the slide in pixels / second
 	 */
 	public void setSlideSpeed(double slideSpeed) {
 		m_slideSpeed = slideSpeed;

@@ -17,8 +17,12 @@ public class ThemePackage {
 	 * Sets the theme object related with the theme class. The first parameter should be the class of the second
 	 * parameter.
 	 *
+	 * @param <T>
+	 *            the Class of the theme
 	 * @param themeClass
+	 *            the Class of the theme to set
 	 * @param theme
+	 *            the theme to set
 	 */
 	public <T> void setTheme(Class<T> themeClass, T theme) {
 		m_themes.put(themeClass, theme);
@@ -27,8 +31,11 @@ public class ThemePackage {
 	/**
 	 * Gets the theme object related with the theme class.
 	 *
+	 * @param <T>
+	 *            the Class of the theme
 	 * @param themeClass
-	 * @return
+	 *            the Class of the theme to return
+	 * @return the theme corresponding with the given Class
 	 */
 	public <T> T getTheme(Class<T> themeClass) {
 		@SuppressWarnings("unchecked")

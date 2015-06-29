@@ -7,8 +7,8 @@ import java.util.TimerTask;
 import javax.swing.Timer;
 
 import com.notification.Notification;
-import com.notification.NotificationManager;
 import com.notification.NotificationFactory.Location;
+import com.notification.NotificationManager;
 import com.platform.Platform;
 import com.utils.Screen;
 import com.utils.Time;
@@ -51,6 +51,7 @@ public class SimpleManager extends NotificationManager {
 	 * Sets the fade time. To enable, call setFadeEnabled(boolean).
 	 *
 	 * @param fadeTime
+	 *            the duration of the fading
 	 */
 	public void setFadeTime(Time fadeTime) {
 		m_fadeTime = fadeTime;
@@ -69,6 +70,7 @@ public class SimpleManager extends NotificationManager {
 	 * Sets whether or not fading is enabled.
 	 *
 	 * @param fadeEnabled
+	 *            whether or not fading is enabled
 	 */
 	public void setFadeEnabled(boolean fadeEnabled) {
 		m_fadeEnabled = fadeEnabled;
@@ -92,6 +94,7 @@ public class SimpleManager extends NotificationManager {
 	 * Sets the location where the Notifications show up.
 	 *
 	 * @param loc
+	 *            the Location to show at
 	 */
 	public void setLocation(Location loc) {
 		m_loc = loc;

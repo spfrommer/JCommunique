@@ -26,8 +26,9 @@ public class BorderLayoutNotification extends WindowNotification {
 
 	/**
 	 * Adds a Component to the Notification.
-	 * 
+	 *
 	 * @param comp
+	 *            the Component to add
 	 * @param borderLayout
 	 *            the BorderLayout String, e.g. BorderLayout.NORTH
 	 */
@@ -44,9 +45,10 @@ public class BorderLayoutNotification extends WindowNotification {
 	}
 
 	/**
-	 * Removes a component
-	 * 
+	 * Removes a component.
+	 *
 	 * @param comp
+	 *            the Component to remove
 	 */
 	public void removeComponent(Component comp) {
 		m_panel.remove(comp);

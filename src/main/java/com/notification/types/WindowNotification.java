@@ -71,7 +71,7 @@ public abstract class WindowNotification extends Notification {
 
 	/**
 	 * @param close
-	 * 
+	 *
 	 *            whether or not the Notification should close when it's clicked
 	 */
 	public void setCloseOnClick(boolean close) {
@@ -87,6 +87,7 @@ public abstract class WindowNotification extends Notification {
 	 * attribute of the theme.
 	 *
 	 * @param theme
+	 *            the WindowTheme to set
 	 */
 	public void setWindowTheme(WindowTheme theme) {
 		m_theme = theme;
@@ -149,7 +150,7 @@ public abstract class WindowNotification extends Notification {
 	/**
 	 * Gets the opacity of the window between 0 and 1.
 	 *
-	 * @return
+	 * @return the opacity of the window
 	 */
 	@Override
 	public double getOpacity() {

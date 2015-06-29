@@ -20,6 +20,7 @@ public abstract class NotificationManager {
 	 * Adds a Notification and will also make it visible.
 	 *
 	 * @param note
+	 *            the Notification to be added
 	 * @param time
 	 *            the amount of time the Notification should display (e.g., Time.seconds(1) will make the Notification
 	 *            display for one second).
@@ -34,6 +35,7 @@ public abstract class NotificationManager {
 	 * Removes a Notification and will also hide it.
 	 *
 	 * @param note
+	 *            the Notification to be removed
 	 */
 	public final void removeNotification(Notification note) {
 		m_notifications.remove(note);

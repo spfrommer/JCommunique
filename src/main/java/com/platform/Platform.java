@@ -27,6 +27,7 @@ public class Platform {
 
 	/**
 	 * @param feature
+	 *            the feature to query
 	 * @return whether or not a certain feature is supported for the platform.
 	 */
 	public boolean isSupported(String feature) {
@@ -44,6 +45,7 @@ public class Platform {
 	 * Sets whether or not the Notifications should be adjusted to best fit the platform.
 	 *
 	 * @param used
+	 *            whether or not the Notifications should be adjusted
 	 */
 	public void setAdjustForPlatform(boolean used) {
 		m_used = used;
