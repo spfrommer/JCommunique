@@ -1,21 +1,21 @@
 package com.unit;
 
-import com.notification.Notification;
-import com.notification.types.TextNotification;
-import com.notification.types.AcceptNotification;
-import com.notification.types.ProgressBarNotification;
-import com.notification.types.IconNotification;
-import com.notification.NotificationManager;
-import com.notification.NotificationFactory;
-import com.notification.NotificationBuilder;
-import com.theme.ThemePackage;
-import com.theme.ThemePackagePresets;
-import com.utils.Time;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import javax.swing.ImageIcon;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import com.notification.NotificationBuilder;
+import com.notification.NotificationFactory;
+import com.notification.types.AcceptNotification;
+import com.notification.types.IconNotification;
+import com.notification.types.ProgressBarNotification;
+import com.notification.types.TextNotification;
+import com.notification.types.WindowNotification;
+import com.theme.ThemePackage;
+import com.theme.ThemePackagePresets;
 
 public class NotificationFactoryTest {
 	private static final String TITLE = "title";
@@ -62,15 +62,19 @@ public class NotificationFactoryTest {
 	@Test
 	public void testCustomBuilder() {
 		NotificationFactory factory = new NotificationFactory(s_pack);
-		factory.addBuilder(TextNotification.class, new CustomBuilder());
-		TextNotification note = factory.build(TextNotification.class);
+		factory.addBuilder(CustomNotification.class, new CustomBuilder());
+		CustomNotification note = factory.build(CustomNotification.class);
 		assertNotNull("The built notification should not be null", note);
 	}
-	
-	private class CustomBuilder implements NotificationBuilder<TextNotification> {
+
+	private class CustomBuilder implements NotificationBuilder<CustomNotification> {
 		@Override
-		public TextNotification buildNotification(ThemePackage pack, Object[] args) {
-			return new TextNotification();
+		public CustomNotification buildNotification(ThemePackage pack, Object... args) {
+			return new CustomNotification();
 		}
+	}
+
+	private class CustomNotification extends WindowNotification {
+
 	}
 }

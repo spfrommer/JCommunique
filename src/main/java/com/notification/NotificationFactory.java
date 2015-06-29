@@ -2,8 +2,10 @@ package com.notification;
 
 import java.util.HashMap;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
+import com.exception.NotificationException;
 import com.notification.types.AcceptNotification;
 import com.notification.types.IconNotification;
 import com.notification.types.ProgressBarNotification;
@@ -25,6 +27,10 @@ public final class NotificationFactory {
 
 	{
 		m_builders = new HashMap<Class<? extends Notification>, NotificationBuilder<? extends Notification>>();
+		m_builders.put(TextNotification.class, new TextNotificationBuilder());
+		m_builders.put(AcceptNotification.class, new AcceptNotificationBuilder());
+		m_builders.put(IconNotification.class, new IconNotificationBuilder());
+		m_builders.put(ProgressBarNotification.class, new ProgressBarNotificationBuilder());
 	}
 
 	public NotificationFactory() {
@@ -104,13 +110,7 @@ public final class NotificationFactory {
 	 * @return
 	 */
 	public TextNotification buildTextNotification(String title, String subtitle) {
-		TextNotification text = new TextNotification();
-		text.setWindowTheme(m_pack.windowTheme);
-		text.setTextTheme(m_pack.textTheme);
-		text.setTitle(title);
-		text.setSubtitle(subtitle);
-
-		return text;
+		return build(TextNotification.class, title, subtitle);
 	}
 
 	/**
@@ -121,15 +121,7 @@ public final class NotificationFactory {
 	 * @return
 	 */
 	public AcceptNotification buildAcceptNotification(String title, String subtitle) {
-		AcceptNotification accept = new AcceptNotification();
-		accept.setWindowTheme(m_pack.windowTheme);
-		accept.setTextTheme(m_pack.textTheme);
-		accept.setTitle(title);
-		accept.setSubtitle(subtitle);
-		accept.setAcceptText("Accept");
-		accept.setDeclineText("Decline");
-
-		return accept;
+		return build(AcceptNotification.class, title, subtitle);
 	}
 
 	/**
@@ -137,18 +129,14 @@ public final class NotificationFactory {
 	 *
 	 * @param title
 	 * @param subtitle
-	 * @param acceptText
+	 * @param accept
 	 *            the text on the accept button
-	 * @param declineText
+	 * @param decline
 	 *            the text on the decline button
 	 * @return
 	 */
-	public AcceptNotification buildAcceptNotification(String title, String subtitle, String acceptText, String declineText) {
-		AcceptNotification accept = buildAcceptNotification(title, subtitle);
-		accept.setAcceptText(acceptText);
-		accept.setDeclineText(declineText);
-
-		return accept;
+	public AcceptNotification buildAcceptNotification(String title, String subtitle, String accept, String decline) {
+		return build(AcceptNotification.class, title, subtitle, accept, decline);
 	}
 
 	/**
@@ -160,14 +148,7 @@ public final class NotificationFactory {
 	 * @return
 	 */
 	public IconNotification buildIconNotification(String title, String subtitle, ImageIcon icon) {
-		IconNotification iconNote = new IconNotification();
-		iconNote.setWindowTheme(m_pack.windowTheme);
-		iconNote.setTextTheme(m_pack.textTheme);
-		iconNote.setTitle(title);
-		iconNote.setSubtitle(subtitle);
-		iconNote.setIcon(icon);
-
-		return iconNote;
+		return build(IconNotification.class, title, subtitle, icon);
 	}
 
 	/**
@@ -177,10 +158,72 @@ public final class NotificationFactory {
 	 * @return
 	 */
 	public ProgressBarNotification buildProgressBarNotification(String title) {
-		ProgressBarNotification progress = new ProgressBarNotification();
-		progress.setWindowTheme(m_pack.windowTheme);
-		progress.setTextTeme(m_pack.textTheme);
-		progress.setTitle(title);
-		return progress;
+		return build(ProgressBarNotification.class, title);
+	}
+
+	private class TextNotificationBuilder implements NotificationBuilder<TextNotification> {
+		@Override
+		public TextNotification buildNotification(ThemePackage pack, Object... args) {
+			if (args.length != 2)
+				throw new NotificationException("TextNotifications need two arguments: title, subtitle!");
+
+			TextNotification note = new TextNotification();
+			note.setWindowTheme(pack.windowTheme);
+			note.setTextTheme(pack.textTheme);
+			note.setTitle((String) args[0]);
+			note.setSubtitle((String) args[1]);
+			return note;
+		}
+	}
+
+	private class AcceptNotificationBuilder implements NotificationBuilder<AcceptNotification> {
+		@Override
+		public AcceptNotification buildNotification(ThemePackage pack, Object... args) {
+			if (args.length != 2 && args.length != 4)
+				throw new NotificationException(
+						"AcceptNotifications need two or four arguments: title, subtitle, accept text, decline text!");
+
+			AcceptNotification note = new AcceptNotification();
+			note.setWindowTheme(pack.windowTheme);
+			note.setTextTheme(pack.textTheme);
+			note.setTitle((String) args[0]);
+			note.setSubtitle((String) args[1]);
+			if (args.length == 4) {
+				note.setAcceptText((String) args[2]);
+				note.setDeclineText((String) args[3]);
+			}
+
+			return note;
+		}
+	}
+
+	private class IconNotificationBuilder implements NotificationBuilder<IconNotification> {
+		@Override
+		public IconNotification buildNotification(ThemePackage pack, Object... args) {
+			if (args.length != 3)
+				throw new NotificationException("IconNotifications need three arguments: title, subtitle, icon!");
+
+			IconNotification note = new IconNotification();
+			note.setWindowTheme(pack.windowTheme);
+			note.setTextTheme(pack.textTheme);
+			note.setTitle((String) args[0]);
+			note.setSubtitle((String) args[1]);
+			note.setIcon((Icon) args[2]);
+			return note;
+		}
+	}
+
+	private class ProgressBarNotificationBuilder implements NotificationBuilder<ProgressBarNotification> {
+		@Override
+		public ProgressBarNotification buildNotification(ThemePackage pack, Object... args) {
+			if (args.length != 1)
+				throw new NotificationException("ProgressBarNotifications need one argument: title!");
+
+			ProgressBarNotification note = new ProgressBarNotification();
+			note.setWindowTheme(pack.windowTheme);
+			note.setTextTheme(pack.textTheme);
+			note.setTitle((String) args[0]);
+			return note;
+		}
 	}
 }

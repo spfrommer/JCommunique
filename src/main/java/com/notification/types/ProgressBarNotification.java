@@ -30,7 +30,7 @@ public class ProgressBarNotification extends BorderLayoutNotification {
 	 *
 	 * @param theme
 	 */
-	public void setTextTeme(TextTheme theme) {
+	public void setTextTheme(TextTheme theme) {
 		m_label.setFont(theme.title);
 		m_label.setForeground(theme.titleColor);
 	}

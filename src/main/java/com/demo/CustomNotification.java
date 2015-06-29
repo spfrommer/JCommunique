@@ -94,7 +94,7 @@ public class CustomNotification extends BorderLayoutNotification {
 
 	public static class CustomBuilder implements NotificationBuilder<CustomNotification> {
 		@Override
-		public CustomNotification buildNotification(ThemePackage pack, Object[] args) {
+		public CustomNotification buildNotification(ThemePackage pack, Object... args) {
 			CustomNotification notification = new CustomNotification();
 			// handled by WindowNotification
 			notification.setWindowTheme(pack.windowTheme);

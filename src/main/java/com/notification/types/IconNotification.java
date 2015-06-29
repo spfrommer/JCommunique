@@ -7,9 +7,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import com.theme.TextTheme;
-import com.theme.WindowTheme;
-
 /**
  * An IconNotification displays text, but with an icon.
  */
@@ -21,10 +18,10 @@ public class IconNotification extends TextNotification {
 	public IconNotification() {
 		super();
 		m_iconLabel = new JLabel();
-		
+
 		this.removeComponent(m_titleLabel);
 		this.removeComponent(m_subtitleLabel);
-		
+
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(m_titleLabel, BorderLayout.NORTH);
 		panel.add(m_subtitleLabel, BorderLayout.CENTER);
@@ -42,7 +39,7 @@ public class IconNotification extends TextNotification {
 	public void setIcon(Icon icon) {
 		m_iconLabel.setIcon(icon);
 	}
-	
+
 	/**
 	 * @return the icon to use
 	 */
