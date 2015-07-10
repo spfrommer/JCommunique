@@ -2,7 +2,6 @@ package com.notification.manager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.TimerTask;
 
 import javax.swing.Timer;
 
@@ -140,13 +139,6 @@ public class SimpleManager extends NotificationManager {
 		return fade;
 	}
 
-	private void scheduleRemoval(Notification note, Time time) {
-		if (!time.isInfinite()) {
-			java.util.Timer removeTimer = new java.util.Timer();
-			removeTimer.schedule(new RemoveTask(note), time.getMilliseconds());
-		}
-	}
-
 	private class Fader implements ActionListener {
 		private Notification m_note;
 		private double m_deltaFade;
@@ -168,19 +160,6 @@ public class SimpleManager extends NotificationManager {
 					m_note.hide();
 				}
 			}
-		}
-	}
-
-	private class RemoveTask extends TimerTask {
-		private Notification m_note;
-
-		public RemoveTask(Notification note) {
-			m_note = note;
-		}
-
-		@Override
-		public void run() {
-			SimpleManager.this.removeNotification(m_note);
 		}
 	}
 }

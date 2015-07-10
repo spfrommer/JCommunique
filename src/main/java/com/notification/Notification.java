@@ -53,7 +53,7 @@ public abstract class Notification {
 	}
 
 	/**
-	 * Removes the Notification from the Manager. In most cases, this has the same effect as calling hide(); however,
+	 * Removes the Notification from the Manager. In some cases, this has the same effect as calling hide(); however,
 	 * hide() doesn't invoke Manager-related things like fading, etc.
 	 */
 	public void removeFromManager() {

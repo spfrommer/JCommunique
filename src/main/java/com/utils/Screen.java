@@ -112,4 +112,8 @@ public class Screen {
 			return -1;
 		}
 	}
+
+	public int getPadding() {
+		return m_padding;
+	}
 }

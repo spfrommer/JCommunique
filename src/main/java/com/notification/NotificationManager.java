@@ -2,6 +2,7 @@ package com.notification;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import com.utils.Time;
 
@@ -14,6 +15,13 @@ public abstract class NotificationManager {
 
 	public NotificationManager() {
 		m_notifications = new ArrayList<Notification>();
+	}
+
+	/**
+	 * @return all the Notifications being managed by the NotificationManager
+	 */
+	public final List<Notification> getNotifications() {
+		return m_notifications;
 	}
 
 	/**
@@ -43,11 +51,27 @@ public abstract class NotificationManager {
 		note.setNotificationManager(null);
 	}
 
-	public final List<Notification> getNotifications() {
-		return m_notifications;
-	}
-
 	protected abstract void notificationAdded(Notification note, Time time);
 
 	protected abstract void notificationRemoved(Notification note);
+
+	protected void scheduleRemoval(Notification note, Time time) {
+		if (!time.isInfinite()) {
+			java.util.Timer removeTimer = new java.util.Timer();
+			removeTimer.schedule(new RemoveTask(note), time.getMilliseconds());
+		}
+	}
+
+	private class RemoveTask extends TimerTask {
+		private Notification m_note;
+
+		public RemoveTask(Notification note) {
+			m_note = note;
+		}
+
+		@Override
+		public void run() {
+			NotificationManager.this.removeNotification(m_note);
+		}
+	}
 }
