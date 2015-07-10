@@ -1,5 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'maven'
+
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 version = '2.0.0'
@@ -31,9 +33,34 @@ sourceSets {
 }
 
 test {
-     testLogging {
-     	  exceptionFormat = 'full'     	 
-     }
+    testLogging {
+     	exceptionFormat = 'full'
+    }
+}
+
+clean {
+	delete "github-release"
+	delete "bintray-release"
+	delete "bin"
+}
+
+task createPom << {
+    pom {
+        project {
+            groupId 'org.jcommunique'
+            artifactId 'JCommunique'
+            version '2.0.0'
+
+            inceptionYear '2015'
+            licenses {
+                license {
+                    name 'The MIT License'
+                    url 'http://opensource.org/licenses/MIT'
+                    distribution 'repo'
+                }
+            }
+        }
+    }.writeTo("pom.xml")
 }
 
 jar {
@@ -56,14 +83,6 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 artifacts {
    archives sourcesJar
    archives javadocJar
-}
-
-uploadArchives {
-    repositories {
-       flatDir {
-           dirs 'repos'
-       }
-    }
 }
 
 task rebuild(dependsOn: ['clean', 'build'])
