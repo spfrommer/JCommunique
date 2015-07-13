@@ -29,6 +29,7 @@ public class SlideManager extends NotificationManager {
 	private HashMap<Notification, SlideDirection> m_slideOutDirections;
 	// store the return directions so that even if the slideIn and slideOut values are changed current Notifications are
 	// not affected
+	private HashMap<Notification, Location> m_notificationLocations;
 
 	private boolean m_overwrite;
 
@@ -61,6 +62,7 @@ public class SlideManager extends NotificationManager {
 		m_noPaddingScreen = Screen.withPadding(0);
 		m_slideSpeed = 300;
 		m_slideOutDirections = new HashMap<Notification, SlideDirection>();
+		m_notificationLocations = new HashMap<Notification, Location>();
 		m_overwrite = false;
 	}
 
@@ -157,24 +159,26 @@ public class SlideManager extends NotificationManager {
 
 	@Override
 	protected void notificationAdded(Notification note, Time time) {
+		m_notificationLocations.put(note, m_loc);
+		m_slideOutDirections.put(note, m_slideOut);
+
 		double delay = 50;
 		double slideDelta = m_slideSpeed / delay;
 		m_sliders.get(m_slideIn).setBorderPosition(note);
-		m_sliders.get(m_slideIn).animate(note, delay, slideDelta, true);
+		m_sliders.get(m_slideIn).animate(note, m_loc, delay, slideDelta, true);
 		note.show();
 
 		double slideTime = m_standardScreen.getPadding() / m_slideSpeed;
 		scheduleRemoval(note, time.add(Time.seconds(slideTime)));
-
-		m_slideOutDirections.put(note, m_slideOut);
 	}
 
 	@Override
 	protected void notificationRemoved(Notification note) {
 		double delay = 50;
 		double slideDelta = m_slideSpeed / delay;
-		m_sliders.get(m_slideOutDirections.get(note)).animate(note, delay, slideDelta, false);
+		m_sliders.get(m_slideOutDirections.get(note)).animate(note, m_notificationLocations.get(note), delay, slideDelta, false);
 		m_slideOutDirections.remove(note);
+		m_notificationLocations.remove(note);
 	}
 
 	private abstract class Slider implements ActionListener {
@@ -188,18 +192,21 @@ public class SlideManager extends NotificationManager {
 
 		protected boolean m_slideIn;
 
-		public void animate(Notification note, double delay, double slideDelta, boolean slideIn) {
+		protected Location m_startLocation;
+
+		public void animate(Notification note, Location loc, double delay, double slideDelta, boolean slideIn) {
 			m_note = note;
 			m_x = note.getX();
 			m_y = note.getY();
 			m_delta = Math.abs(slideDelta);
 			m_slideIn = slideIn;
+			m_startLocation = loc;
 			if (m_slideIn) {
-				m_stopX = m_standardScreen.getX(m_loc, note);
-				m_stopY = m_standardScreen.getY(m_loc, note);
+				m_stopX = m_standardScreen.getX(m_startLocation, note);
+				m_stopY = m_standardScreen.getY(m_startLocation, note);
 			} else {
-				m_stopX = m_noPaddingScreen.getX(m_loc, note);
-				m_stopY = m_noPaddingScreen.getY(m_loc, note);
+				m_stopX = m_noPaddingScreen.getX(m_startLocation, note);
+				m_stopY = m_noPaddingScreen.getY(m_startLocation, note);
 			}
 
 			Timer timer = new Timer((int) delay, this);

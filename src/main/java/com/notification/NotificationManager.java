@@ -34,9 +34,11 @@ public abstract class NotificationManager {
 	 *            display for one second).
 	 */
 	public final void addNotification(Notification note, Time time) {
-		note.setNotificationManager(this);
-		m_notifications.add(note);
-		notificationAdded(note, time);
+		if (!m_notifications.contains(note)) {
+			note.setNotificationManager(this);
+			m_notifications.add(note);
+			notificationAdded(note, time);
+		}
 	}
 
 	/**
@@ -46,9 +48,11 @@ public abstract class NotificationManager {
 	 *            the Notification to be removed
 	 */
 	public final void removeNotification(Notification note) {
-		m_notifications.remove(note);
-		notificationRemoved(note);
-		note.setNotificationManager(null);
+		if (m_notifications.contains(note)) {
+			m_notifications.remove(note);
+			notificationRemoved(note);
+			note.setNotificationManager(null);
+		}
 	}
 
 	protected abstract void notificationAdded(Notification note, Time time);

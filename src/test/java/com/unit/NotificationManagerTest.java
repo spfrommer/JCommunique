@@ -1,12 +1,13 @@
 package com.unit;
 
-import com.notification.Notification;
-import com.notification.types.TextNotification;
-import com.notification.NotificationManager;
-import com.utils.Time;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
+
+import com.notification.Notification;
+import com.notification.NotificationManager;
+import com.notification.types.TextNotification;
+import com.utils.Time;
 
 public class NotificationManagerTest {
 	@Test
@@ -15,9 +16,9 @@ public class NotificationManagerTest {
 		TextNotification note = new TextNotification();
 
 		manager.addNotification(note, Time.infinite());
-		assertTrue("addNotification() should trigger notificationAdded()", manager.added);
+		assertEquals("addNotification() should trigger notificationAdded()", 1, manager.addedCounter);
 		manager.removeNotification(note);
-		assertTrue("removeNotification() should trigger notificationRemoved()", manager.removed);
+		assertEquals("removeNotification() should trigger notificationRemoved()", 1, manager.removedCounter);
 	}
 
 	@Test
@@ -31,18 +32,66 @@ public class NotificationManagerTest {
 		assertEquals("removeNotification() should increase Notification list size", 0, manager.getNotifications().size());
 	}
 
+	@Test
+	public void managerShouldNotDoubleAdd() {
+		CustomNotificationManager manager = new CustomNotificationManager();
+		TextNotification note = new TextNotification();
+
+		manager.addNotification(note, Time.infinite());
+		manager.addNotification(note, Time.infinite());
+		assertEquals("Notification should have been added only once", 1, manager.addedCounter);
+	}
+
+	@Test
+	public void scheduleRemovalShouldRemove() {
+		CustomNotificationManager manager = new CustomNotificationManager();
+		TextNotification note = new TextNotification();
+
+		manager.addNotification(note, Time.infinite());
+		manager.scheduleRemoval(note, Time.milliseconds(50));
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		assertEquals("Notification should have been removed once", 1, manager.removedCounter);
+	}
+
+	@Test
+	public void managerShouldNotDoubleRemove() {
+		CustomNotificationManager manager = new CustomNotificationManager();
+		TextNotification note = new TextNotification();
+
+		manager.addNotification(note, Time.infinite());
+		manager.scheduleRemoval(note, Time.milliseconds(50));
+		manager.removeNotification(note);
+		manager.removeNotification(note);
+		assertEquals("Notification should have been removed only once", 1, manager.removedCounter);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		assertEquals("Notification should have been removed only once, even after scheduling", 1, manager.removedCounter);
+	}
+
 	private class CustomNotificationManager extends NotificationManager {
-		public boolean added = false;
-		public boolean removed = false;
+		private int addedCounter = 0;
+		private int removedCounter = 0;
 
 		@Override
 		protected void notificationAdded(Notification note, Time time) {
-			added = true;
+			addedCounter++;
 		}
 
 		@Override
 		protected void notificationRemoved(Notification note) {
-			removed = true;
+			removedCounter++;
+		}
+
+		@Override
+		public void scheduleRemoval(Notification note, Time time) {
+			super.scheduleRemoval(note, time);
 		}
 	}
 }
