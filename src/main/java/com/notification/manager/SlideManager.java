@@ -23,34 +23,12 @@ public class SlideManager extends NotificationManager {
 
 	private HashMap<SlideDirection, Slider> m_sliders;
 	private SlideDirection m_slideIn;
-	private SlideDirection m_slideOut;
 	private double m_slideSpeed;
 
-	private HashMap<Notification, SlideDirection> m_slideOutDirections;
-	// store the return directions so that even if the slideIn and slideOut values are changed current Notifications are
-	// not affected
-	private HashMap<Notification, Location> m_notificationLocations;
+	private HashMap<Notification, SlideState> m_slideStates;
+	// store the values mid slide so that changes to SlideManager do not affect them
 
 	private boolean m_overwrite;
-
-	public enum SlideDirection {
-		NORTH, SOUTH(SlideDirection.NORTH), EAST, WEST(SlideDirection.EAST);
-
-		private SlideDirection m_opposite;
-
-		SlideDirection() {
-
-		}
-
-		SlideDirection(SlideDirection opposite) {
-			m_opposite = opposite;
-			opposite.m_opposite = this;
-		}
-
-		public SlideDirection getOpposite() {
-			return m_opposite;
-		}
-	}
 
 	{
 		m_sliders = new HashMap<SlideDirection, Slider>();
@@ -61,19 +39,16 @@ public class SlideManager extends NotificationManager {
 		m_standardScreen = Screen.standard();
 		m_noPaddingScreen = Screen.withPadding(0);
 		m_slideSpeed = 300;
-		m_slideOutDirections = new HashMap<Notification, SlideDirection>();
-		m_notificationLocations = new HashMap<Notification, Location>();
+		m_slideStates = new HashMap<Notification, SlideState>();
 		m_overwrite = false;
 	}
 
 	public SlideManager() {
-		m_loc = Location.NORTHEAST;
-		recalculateSlideDirection();
+		setLocation(Location.NORTHEAST);
 	}
 
 	public SlideManager(Location loc) {
-		m_loc = loc;
-		recalculateSlideDirection();
+		setLocation(loc);
 	}
 
 	/**
@@ -110,7 +85,6 @@ public class SlideManager extends NotificationManager {
 	 */
 	public void setSlideDirection(SlideDirection slide) {
 		m_slideIn = slide;
-		m_slideOut = slide.getOpposite();
 		m_overwrite = true;
 	}
 
@@ -154,17 +128,15 @@ public class SlideManager extends NotificationManager {
 			m_slideIn = SlideDirection.EAST;
 			break;
 		}
-		m_slideOut = m_slideIn.getOpposite();
 	}
 
 	@Override
 	protected void notificationAdded(Notification note, Time time) {
-		m_notificationLocations.put(note, m_loc);
-		m_slideOutDirections.put(note, m_slideOut);
+		m_slideStates.put(note, new SlideState(m_loc, m_slideIn.getOpposite()));
 
 		double delay = 50;
 		double slideDelta = m_slideSpeed / delay;
-		m_sliders.get(m_slideIn).setBorderPosition(note);
+		m_sliders.get(m_slideIn).setBorderPosition(note, m_loc);
 		m_sliders.get(m_slideIn).animate(note, m_loc, delay, slideDelta, true);
 		note.show();
 
@@ -174,11 +146,40 @@ public class SlideManager extends NotificationManager {
 
 	@Override
 	protected void notificationRemoved(Notification note) {
+		SlideState state = m_slideStates.get(note);
 		double delay = 50;
 		double slideDelta = m_slideSpeed / delay;
-		m_sliders.get(m_slideOutDirections.get(note)).animate(note, m_notificationLocations.get(note), delay, slideDelta, false);
-		m_slideOutDirections.remove(note);
-		m_notificationLocations.remove(note);
+		m_sliders.get(state.returnDirection).animate(note, state.loc, delay, slideDelta, false);
+		m_slideStates.remove(note);
+	}
+
+	private class SlideState {
+		public Location loc;
+		public SlideDirection returnDirection;
+
+		public SlideState(Location loc, SlideDirection returnDirection) {
+			this.loc = loc;
+			this.returnDirection = returnDirection;
+		}
+	}
+
+	public enum SlideDirection {
+		NORTH, SOUTH(SlideDirection.NORTH), EAST, WEST(SlideDirection.EAST);
+
+		private SlideDirection m_opposite;
+
+		SlideDirection() {
+
+		}
+
+		SlideDirection(SlideDirection opposite) {
+			m_opposite = opposite;
+			opposite.m_opposite = this;
+		}
+
+		public SlideDirection getOpposite() {
+			return m_opposite;
+		}
 	}
 
 	private abstract class Slider implements ActionListener {
@@ -219,7 +220,7 @@ public class SlideManager extends NotificationManager {
 				m_note.hide();
 		}
 
-		public abstract void setBorderPosition(Notification note);
+		public abstract void setBorderPosition(Notification note, Location loc);
 	}
 
 	private class NorthSlider extends Slider {
@@ -236,8 +237,8 @@ public class SlideManager extends NotificationManager {
 		}
 
 		@Override
-		public void setBorderPosition(Notification note) {
-			note.setLocation(m_standardScreen.getX(m_loc, note), m_noPaddingScreen.getY(m_loc, note));
+		public void setBorderPosition(Notification note, Location loc) {
+			note.setLocation(m_standardScreen.getX(loc, note), m_noPaddingScreen.getY(loc, note));
 		}
 	}
 
@@ -255,8 +256,8 @@ public class SlideManager extends NotificationManager {
 		}
 
 		@Override
-		public void setBorderPosition(Notification note) {
-			note.setLocation(m_standardScreen.getX(m_loc, note), m_noPaddingScreen.getY(m_loc, note));
+		public void setBorderPosition(Notification note, Location loc) {
+			note.setLocation(m_standardScreen.getX(loc, note), m_noPaddingScreen.getY(loc, note));
 		}
 	}
 
@@ -274,8 +275,8 @@ public class SlideManager extends NotificationManager {
 		}
 
 		@Override
-		public void setBorderPosition(Notification note) {
-			note.setLocation(m_noPaddingScreen.getX(m_loc, note), m_standardScreen.getY(m_loc, note));
+		public void setBorderPosition(Notification note, Location loc) {
+			note.setLocation(m_noPaddingScreen.getX(loc, note), m_standardScreen.getY(loc, note));
 		}
 	}
 
@@ -293,9 +294,8 @@ public class SlideManager extends NotificationManager {
 		}
 
 		@Override
-		public void setBorderPosition(Notification note) {
-			note.setLocation(m_noPaddingScreen.getX(m_loc, note), m_standardScreen.getY(m_loc, note));
+		public void setBorderPosition(Notification note, Location loc) {
+			note.setLocation(m_noPaddingScreen.getX(loc, note), m_standardScreen.getY(loc, note));
 		}
 	}
-
 }
