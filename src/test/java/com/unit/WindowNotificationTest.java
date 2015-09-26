@@ -1,34 +1,36 @@
 package com.unit;
 
-import com.notification.Notification;
-import com.notification.types.TextNotification;
-import com.notification.types.WindowNotification;
-import com.notification.NotificationListener;
-import com.theme.WindowTheme;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Color;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JPanel;
 import javax.swing.JWindow;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
-public class WindowNotificationTest {
-	public static final double TINY_DELTA = 0.00001;
+import com.notification.Notification;
+import com.notification.NotificationListener;
+import com.notification.types.TextNotification;
+import com.notification.types.WindowNotification;
+import com.theme.WindowTheme;
 
+public class WindowNotificationTest {
 	@Test
 	public void opacityShouldNotExceed1() {
 		WindowNotification note = new TextNotification(); // needs an instance of a concrete class
 		note.setOpacity(2);
-		assertEquals("WindowNotification opacity should not exceed 1", 1, note.getOpacity(), TINY_DELTA);
+		assertEquals("WindowNotification opacity should not exceed 1", 1, note.getOpacity(), TestUtils.TINY_DELTA);
 	}
 
 	@Test
 	public void opacityShouldNotGoBelow0() {
 		WindowNotification note = new TextNotification();
 		note.setOpacity(-1);
-		assertEquals("WindowNotification opacity should not go below 0", 0, note.getOpacity(), TINY_DELTA);
+		assertEquals("WindowNotification opacity should not go below 0", 0, note.getOpacity(), TestUtils.TINY_DELTA);
 	}
 
 	@Test
@@ -134,7 +136,7 @@ public class WindowNotificationTest {
 		theme.height = 400;
 		note.setWindowTheme(theme);
 
-		assertEquals("Window opacity should equal theme opacity", theme.opacity, note.getOpacity(), TINY_DELTA);
+		assertEquals("Window opacity should equal theme opacity", theme.opacity, note.getOpacity(), TestUtils.TINY_DELTA);
 		assertEquals("Window width should equal theme width", theme.width, note.getWidth());
 		assertEquals("Window height should equal theme height", theme.height, note.getHeight());
 		assertEquals("Window foreground should equal theme foreground", theme.foreground, note.getInternalWindow()

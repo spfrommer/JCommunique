@@ -10,6 +10,7 @@ import javax.swing.JWindow;
 
 import com.notification.Notification;
 import com.theme.WindowTheme;
+import com.utils.MathUtils;
 
 /**
  * A Notification which displays in a JWindow, handles click events, and allows subclasses to supply a JPanel. The
@@ -165,15 +166,7 @@ public abstract class WindowNotification extends Notification {
 	 */
 	@Override
 	public void setOpacity(double opacity) {
-		if (opacity < 0) {
-			opacity = 0;
-		}
-
-		if (opacity > 1f) {
-			opacity = 1f;
-		}
-
-		m_window.setOpacity((float) opacity);
+		m_window.setOpacity((float) MathUtils.clamp(opacity, 0, 1));
 	}
 
 	@Override

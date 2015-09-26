@@ -8,6 +8,7 @@ import javax.swing.Timer;
 
 import com.notification.Notification;
 import com.notification.NotificationFactory.Location;
+import com.utils.MathUtils;
 
 /**
  * A NotificationManager which slides old Notifications above or below new Notifications.
@@ -15,6 +16,7 @@ import com.notification.NotificationFactory.Location;
 public class QueueManager extends SimpleManager {
 	private Timer m_timer;
 	private int m_verticalPadding = 20;
+	private double m_snapFactor = 0.2;
 	private ScrollDirection m_scroll = ScrollDirection.SOUTH;
 
 	/**
@@ -53,6 +55,25 @@ public class QueueManager extends SimpleManager {
 	 */
 	public void setVerticalPadding(int verticalPadding) {
 		m_verticalPadding = verticalPadding;
+	}
+
+	/**
+	 * @return the proportion of remaining distance that a displaced notification should travel with each position
+	 *         update, with a range of 0 (no movement) to 1 (immediately jumps to appropriate location)
+	 */
+	public double getSnapFactor() {
+		return m_snapFactor;
+	}
+
+	/**
+	 * Sets the speed with which old Notifications move out of the way when new Notifications are added.
+	 *
+	 * @param snapFactor
+	 *            the proportion of remaining distance that a displaced notification should travel with each position
+	 *            update, with a range of 0 (no movement) to 1 (immediately jumps to appropriate location)
+	 */
+	public void setSnapFactor(double snapFactor) {
+		m_snapFactor = MathUtils.clamp(snapFactor, 0, 1);
 	}
 
 	/**
@@ -96,8 +117,8 @@ public class QueueManager extends SimpleManager {
 				return;
 
 			Location loc = getLocation();
-			int x = getScreen().getX(loc, notes.get(0));
-			int y = getScreen().getY(loc, notes.get(0));
+			int startx = getScreen().getX(loc, notes.get(0));
+			int starty = getScreen().getY(loc, notes.get(0));
 
 			for (int i = notes.size() - 1; i >= 0; i--) {
 				Notification note = notes.get(i);
@@ -106,28 +127,23 @@ public class QueueManager extends SimpleManager {
 				int dif = 0;
 				int desdif = 0;
 				if (prevIndex == -1) {
-					dif = note.getY() - y;
+					dif = note.getY() - starty;
 					desdif = 0;
 				} else {
 					Notification prev = notes.get(prevIndex);
 					dif = note.getY() - prev.getY();
-					if (m_scroll == ScrollDirection.SOUTH) {
-						desdif = prev.getHeight() + m_verticalPadding;
-					} else {
-						desdif = -prev.getHeight() - m_verticalPadding;
+					desdif = prev.getHeight() + m_verticalPadding;
+					if (m_scroll == ScrollDirection.NORTH) {
+						desdif *= -1;
 					}
 				}
 
-				// not really sure why this code works, but it does
 				int delta = desdif - dif;
-				int setNum = delta / 3;
-				if (delta == 0) {
-					continue;
+				double moveAmount = delta * m_snapFactor;
+				if (Math.abs(moveAmount) < 1) {
+					moveAmount = MathUtils.sign(moveAmount);
 				}
-				if (Math.abs(delta) < 3) {
-					setNum = delta > 0 ? 1 : -1;
-				}
-				note.setLocation(x, note.getY() + setNum);
+				note.setLocation(startx, note.getY() + (int) moveAmount);
 			}
 		}
 	}
