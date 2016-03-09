@@ -177,7 +177,7 @@ public abstract class WindowNotification extends Notification {
 
 	@Override
 	public void hide() {
-		m_window.setVisible(false);
+		m_window.dispose();
 		fireListeners(HIDDEN);
 	}
 

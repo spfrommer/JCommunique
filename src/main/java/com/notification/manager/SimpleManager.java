@@ -1,9 +1,7 @@
 package com.notification.manager;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.Timer;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.notification.Notification;
 import com.notification.NotificationFactory.Location;
@@ -23,7 +21,10 @@ public class SimpleManager extends NotificationManager {
 	private boolean m_fadeEnabled = false;
 	private Time m_fadeTime;
 
-	private static final int FADE_DELAY = 100; // milliseconds
+	private FaderRunnable m_fader;
+	private Thread m_faderThread;
+
+	private static final int FADE_DELAY = 50; // milliseconds
 
 	{
 		m_screen = Screen.standard();
@@ -73,6 +74,16 @@ public class SimpleManager extends NotificationManager {
 	 */
 	public void setFadeEnabled(boolean fadeEnabled) {
 		m_fadeEnabled = fadeEnabled;
+
+		if (fadeEnabled) {
+			m_fader = new FaderRunnable();
+			m_faderThread = new Thread(m_fader);
+			m_faderThread.start();
+		} else {
+			m_fader.stop();
+			m_fader = null;
+			m_faderThread = null;
+		}
 
 		syncFadeEnabledWithPlatform();
 	}
@@ -129,37 +140,76 @@ public class SimpleManager extends NotificationManager {
 	}
 
 	private void startFade(Notification note, double deltaOpacity) {
-		Timer timer = new Timer(FADE_DELAY, new Fader(note, getDeltaFade(deltaOpacity), deltaOpacity));
-		timer.start();
+		m_fader.addFader(new Fader(note, getDeltaFade(deltaOpacity), note.getOpacity() + deltaOpacity));
 	}
 
 	private double getDeltaFade(double deltaOpacity) {
-		double numTimes = m_fadeTime.getMilliseconds() / (double) FADE_DELAY;
-		double fade = deltaOpacity / numTimes;
-		return fade;
+		return deltaOpacity / m_fadeTime.getMilliseconds();
 	}
 
-	private class Fader implements ActionListener {
+	private class FaderRunnable implements Runnable {
+		private List<Fader> m_faders;
+		private boolean m_shouldStop;
+
+		public FaderRunnable() {
+			m_faders = new CopyOnWriteArrayList<Fader>();
+			m_shouldStop = false;
+		}
+
+		public void addFader(Fader fader) {
+			m_faders.add(fader);
+		}
+
+		public void stop() {
+			m_shouldStop = true;
+		}
+
+		@Override
+		public void run() {
+			while (!m_shouldStop) {
+				for (Fader fader : m_faders) {
+					fader.updateFade();
+					if (fader.isFinishedFading()) {
+						m_faders.remove(fader);
+					}
+				}
+				try {
+					Thread.sleep(FADE_DELAY);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	private class Fader {
 		private Notification m_note;
-		private double m_deltaFade;
+		private long m_fadeStartTime;
+		private double m_startFade;
 		private double m_stopFade;
+		private double m_deltaFade; // delta fade per millisecond
 
 		public Fader(Notification note, double deltaFade, double stopFade) {
 			m_note = note;
 			m_deltaFade = deltaFade;
 			m_stopFade = stopFade;
+			m_startFade = note.getOpacity();
+			m_fadeStartTime = System.currentTimeMillis();
 		}
 
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if ((m_deltaFade > 0) ? m_note.getOpacity() < m_stopFade : m_note.getOpacity() > m_stopFade) {
-				m_note.setOpacity(m_note.getOpacity() + m_deltaFade);
+		public void updateFade() {
+			long deltaTime = System.currentTimeMillis() - m_fadeStartTime;
+			if (!isFinishedFading()) {
+				m_note.setOpacity(m_startFade + m_deltaFade * deltaTime);
 			} else {
-				((Timer) e.getSource()).stop();
 				if (m_deltaFade < 0) {
 					m_note.hide();
 				}
 			}
+		}
+
+		public boolean isFinishedFading() {
+			return (m_deltaFade > 0) ? m_note.getOpacity() >= m_stopFade : m_note.getOpacity() <= m_stopFade;
 		}
 	}
 }
