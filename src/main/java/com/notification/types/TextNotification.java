@@ -3,6 +3,7 @@ package com.notification.types;
 import java.awt.BorderLayout;
 
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 import com.theme.TextTheme;
 import com.theme.WindowTheme;
@@ -12,13 +13,13 @@ import com.theme.WindowTheme;
  */
 public class TextNotification extends BorderLayoutNotification {
 	protected JLabel m_titleLabel;
-	protected JLabel m_subtitleLabel;
+	protected JTextArea m_subtitleLabel;
 
 	private TextTheme m_textTheme;
 
 	public TextNotification() {
 		m_titleLabel = new JLabel();
-		m_subtitleLabel = new JLabel();
+		m_subtitleLabel = new JTextArea();
 
 		this.addComponent(m_titleLabel, BorderLayout.NORTH);
 		this.addComponent(m_subtitleLabel, BorderLayout.CENTER);

@@ -31,7 +31,8 @@ public class SimpleManagerDemo {
 		fade.setFadeTime(Time.seconds(2));
 
 		// adds a text notification to the first manager
-		TextNotification notification = factory.buildTextNotification("This is the dark theme", "No fade");
+		TextNotification notification = factory.buildTextNotification("This is the dark theme",
+				"You can have multiple lines\nOf subtitle text as well\nLine 3");
 		notification.setCloseOnClick(true);
 		// the notification will stay there forever until you click it to exit
 		plain.addNotification(notification, Time.infinite());
