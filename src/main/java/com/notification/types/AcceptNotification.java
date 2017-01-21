@@ -23,27 +23,20 @@ public class AcceptNotification extends TextNotification {
 	public AcceptNotification() {
 		m_accept = new JButton("Accept");
 		m_decline = new JButton("Decline");
+		m_accepted = false;
 
 		m_accept.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				removeFromManager();
-
 				m_accepted = true;
-				synchronized (AcceptNotification.this) {
-					AcceptNotification.this.notifyAll();
-				}
+				removeFromManager();
 			}
 		});
 		m_decline.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				removeFromManager();
-
 				m_accepted = false;
-				synchronized (AcceptNotification.this) {
-					AcceptNotification.this.notifyAll();
-				}
+				removeFromManager();
 			}
 		});
 
@@ -120,7 +113,6 @@ public class AcceptNotification extends TextNotification {
 	public void hide() {
 		super.hide();
 
-		m_accepted = false;
 		synchronized (this) {
 			this.notifyAll();
 		}
