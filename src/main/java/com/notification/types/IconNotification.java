@@ -20,11 +20,11 @@ public class IconNotification extends TextNotification {
 		m_iconLabel = new JLabel();
 
 		this.removeComponent(m_titleLabel);
-		this.removeComponent(m_subtitleLabel);
+		this.removeComponent(m_subtitleArea);
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(m_titleLabel, BorderLayout.NORTH);
-		panel.add(m_subtitleLabel, BorderLayout.CENTER);
+		panel.add(m_subtitleArea, BorderLayout.CENTER);
 		panel.setBorder(new EmptyBorder(0, ICON_PADDING, 0, 0));
 
 		this.addComponent(m_iconLabel, BorderLayout.WEST);

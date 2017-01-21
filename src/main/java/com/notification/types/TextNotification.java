@@ -13,16 +13,16 @@ import com.theme.WindowTheme;
  */
 public class TextNotification extends BorderLayoutNotification {
 	protected JLabel m_titleLabel;
-	protected JTextArea m_subtitleLabel;
+	protected JTextArea m_subtitleArea;
 
 	private TextTheme m_textTheme;
 
 	public TextNotification() {
 		m_titleLabel = new JLabel();
-		m_subtitleLabel = new JTextArea();
+		m_subtitleArea = new JTextArea();
 
 		this.addComponent(m_titleLabel, BorderLayout.NORTH);
-		this.addComponent(m_subtitleLabel, BorderLayout.CENTER);
+		this.addComponent(m_subtitleArea, BorderLayout.CENTER);
 	}
 
 	public String getTitle() {
@@ -34,11 +34,11 @@ public class TextNotification extends BorderLayoutNotification {
 	}
 
 	public String getSubtitle() {
-		return m_subtitleLabel.getText();
+		return m_subtitleArea.getText();
 	}
 
 	public void setSubtitle(String subtitle) {
-		m_subtitleLabel.setText(subtitle);
+		m_subtitleArea.setText(subtitle);
 	}
 
 	protected TextTheme getTextTheme() {
@@ -52,9 +52,9 @@ public class TextNotification extends BorderLayoutNotification {
 	public void setTextTheme(TextTheme theme) {
 		m_textTheme = theme;
 		m_titleLabel.setFont(theme.title);
-		m_subtitleLabel.setFont(theme.subtitle);
+		m_subtitleArea.setFont(theme.subtitle);
 		m_titleLabel.setForeground(theme.titleColor);
-		m_subtitleLabel.setForeground(theme.subtitleColor);
+		m_subtitleArea.setForeground(theme.subtitleColor);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class TextNotification extends BorderLayoutNotification {
 
 		if (m_textTheme != null) {
 			m_titleLabel.setForeground(m_textTheme.titleColor);
-			m_subtitleLabel.setForeground(m_textTheme.subtitleColor);
+			m_subtitleArea.setForeground(m_textTheme.subtitleColor);
 		}
 	}
 }
