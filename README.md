@@ -1,6 +1,8 @@
 # JCommunique
 JCommunique is a free, open-source library written in pure Java. It uses Swing to show pop-up notifications on the desktop and offers a range of features with a simple-to-use API. Refer to the demo package for examples.
 
+### JCommunique is no longer being actively maintained.
+
 ### Releases
 Stable JCommunique releases as jars are available at [2]. As of version 2.0.0, source and javadoc jars are also available. The project is also distributed on JCenter [5].
 
